@@ -1,382 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dreamzz Spa Admin</title>
+<title>Dreamzz Spa Admin</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #111;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .container {
-      max-width: 950px;
-      margin: auto;
-      padding: 20px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5efe6;
+  color: #3d3028;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 32px;
-    }
+.container {
+  max-width: 950px;
+  margin: auto;
+  padding: 25px 20px;
+}
 
-    .sub {
-      color: #666;
-      margin: 5px 0 20px;
-    }
+/* HEADER */
 
-    .login,
-    .admin {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-    }
+h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #3d3028;
+}
 
-    input,
-    select {
-      font-family: inherit;
-      font-size: 14px;
-    }
+.sub {
+  color: #8b7768;
+  margin: 6px 0 22px;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      outline: none;
-    }
+/* LOGIN + ADMIN */
 
-    input:focus,
-    select:focus {
-      border-color: #999;
-    }
+.login,
+.admin {
+  background: #fffdf9;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(80, 55, 35, 0.08);
+  border: 1px solid #eadfd2;
+}
 
-    button {
-      border: 0;
-      border-radius: 8px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-size: 14px;
-      background: #111;
-      color: white;
-    }
+/* INPUTS */
 
-    button:hover {
-      opacity: 0.88;
-    }
+input,
+select {
+  font-family: inherit;
+  font-size: 14px;
+}
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #dfd1c3;
+  border-radius: 10px;
+  outline: none;
+  background: #fffdf9;
+  color: #3d3028;
+}
 
-    .error {
-      color: #d00;
-      margin-top: 10px;
-    }
+input:focus,
+select:focus {
+  border-color: #b58b52;
+}
 
-    /* TOP BAR */
+/* BUTTON */
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  background: #5b4636;
+  color: white;
+  transition: 0.2s;
+}
 
-    .top-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+button:hover {
+  background: #463428;
+}
 
-    /* FILTERS */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-    .filters {
-      display: grid;
-      grid-template-columns: 1fr 150px 180px;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+/* TOP BAR */
 
-    .filters input,
-    .filters select {
-      width: 100%;
-      height: 44px;
-      padding: 0 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: white;
-    }
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
 
-    /* STATS */
+.top-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+.top-actions button:last-child {
+  background: #b58b52;
+}
 
-    .stat {
-      background: #f7f7f7;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-    }
+.top-actions button:last-child:hover {
+  background: #98713f;
+}
 
-    .stat-number {
-      font-size: 25px;
-      font-weight: bold;
-    }
+/* FILTERS */
 
-    .stat-label {
-      color: #666;
-      font-size: 13px;
-      margin-top: 4px;
-    }
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 160px 180px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-    /* BOOKINGS */
+.filters input,
+.filters select {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #dfd1c3;
+  border-radius: 10px;
+  background: #fffdf9;
+  color: #3d3028;
+  outline: none;
+}
 
-    .booking {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 12px 0;
-      background: white;
-    }
+/* STATS */
 
-    .booking-info {
-      line-height: 1.7;
-    }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
-    .booking-info strong {
-      display: inline-block;
-      min-width: 75px;
-    }
+.stat {
+  background: #f8f1e8;
+  border: 1px solid #eadfd2;
+  border-radius: 13px;
+  padding: 16px;
+  text-align: center;
+}
 
-    .contact-actions {
-      display: flex;
-      gap: 7px;
-      margin: 10px 0;
-      flex-wrap: wrap;
-    }
+.stat-number {
+  font-size: 27px;
+  font-weight: bold;
+  color: #5b4636;
+}
 
-    .call-btn,
-    .whatsapp-btn {
-      display: inline-block;
-      padding: 7px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      text-decoration: none;
-      color: white;
-    }
+.stat-label {
+  color: #927e6d;
+  font-size: 13px;
+  margin-top: 5px;
+}
 
-    .call-btn {
-      background: #111;
-    }
+/* BOOKING */
 
-    .whatsapp-btn {
-      background: #25D366;
-    }
+.booking {
+  border: 1px solid #eadfd2;
+  border-radius: 14px;
+  padding: 17px;
+  margin: 12px 0;
+  background: #fffdf9;
+  box-shadow: 0 4px 15px rgba(80, 55, 35, 0.05);
+}
 
-    .status {
-      margin-top: 12px;
-      font-weight: bold;
-    }
+.booking-info {
+  line-height: 1.75;
+}
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
+.booking-info strong {
+  display: inline-block;
+  min-width: 75px;
+  color: #5b4636;
+}
 
-    .actions button {
-      background: #eee;
-      color: #111;
-    }
+/* CONTACT */
 
-    .actions button:hover {
-      background: #ddd;
-    }
+.contact-actions {
+  display: flex;
+  gap: 7px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
 
-    .empty,
-    .loading {
-      color: #666;
-      padding: 20px 0;
-      text-align: center;
-    }
+.call-btn,
+.whatsapp-btn {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  text-decoration: none;
+  color: white;
+}
 
-    .count-info {
-      color: #666;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
+.call-btn {
+  background: #5b4636;
+}
 
-    /* MOBILE */
+.whatsapp-btn {
+  background: #25D366;
+}
 
-    @media (max-width: 700px) {
+/* STATUS */
 
-      .container {
-        padding: 12px;
-      }
+.status {
+  margin-top: 13px;
+  font-weight: bold;
+  color: #6c5849;
+}
 
-      h1 {
-        font-size: 27px;
-      }
+/* ACTIONS */
 
-      .filters {
-        grid-template-columns: 1fr;
-      }
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee3d8;
+}
 
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
+.actions button {
+  background: #f1e8de;
+  color: #5b4636;
+  border: 1px solid #e1d3c5;
+}
 
-      .topbar {
-        align-items: flex-start;
-      }
+.actions button:hover {
+  background: #e5d8ca;
+}
 
-      .top-actions {
-        width: 100%;
-      }
+/* INFO */
 
-      .top-actions button {
-        flex: 1;
-      }
-    }
-  </style>
+.empty,
+.loading {
+  color: #927e6d;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.count-info {
+  color: #927e6d;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .container {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .top-actions {
+    width: 100%;
+  }
+
+  .top-actions button {
+    flex: 1;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>Dreamzz Spa Admin</h1>
-  <div class="sub">Booking Management</div>
-
-  <!-- LOGIN -->
-
-  <div class="login" id="loginBox">
-
-    <h3>Admin Login</h3>
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter admin password"
-    >
-
-    <button onclick="login()">
-      Login
-    </button>
-
-    <div class="error" id="loginError"></div>
-
-  </div>
+<h1>Dreamzz Spa Admin</h1>
+<div class="sub">Booking Management</div>
 
 
-  <!-- ADMIN -->
+<!-- LOGIN -->
 
-  <div class="admin" id="adminPanel" style="display:none;">
+<div class="login" id="loginBox">
 
-    <div class="topbar">
+<h3>Admin Login</h3>
 
-      <div>
-        <h3 style="margin:0;">Bookings</h3>
-      </div>
+<input
+  type="password"
+  id="password"
+  placeholder="Enter admin password"
+>
 
-      <div class="top-actions">
+<br><br>
 
-        <button id="refreshBtn" onclick="loadBookings()">
-          🔄 Refresh
-        </button>
+<button onclick="login()">
+  Login
+</button>
 
-        <button onclick="exportBookings()">
-          📥 Export
-        </button>
+<div class="error" id="loginError"></div>
 
-      </div>
-
-    </div>
+</div>
 
 
-    <!-- FILTERS -->
+<!-- ADMIN -->
 
-    <div class="filters">
+<div class="admin" id="adminPanel" style="display:none;">
 
-      <input
-        type="text"
-        id="searchBooking"
-        placeholder="Search name or phone..."
-        oninput="filterBookings()"
-      >
+<div class="topbar">
 
-      <select
-        id="statusFilter"
-        onchange="filterBookings()"
-      >
-        <option value="">All Status</option>
-        <option value="New">New</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Completed">Completed</option>
-      </select>
+<div>
+<h3 style="margin:0;">Bookings</h3>
+</div>
 
-      <input
-        type="date"
-        id="dateFilter"
-        onchange="filterBookings()"
-      >
+<div class="top-actions">
 
-    </div>
+<button id="refreshBtn" onclick="loadBookings()">
+🔄 Refresh
+</button>
+
+<button onclick="exportBookings()">
+📥 Export
+</button>
+
+</div>
+
+</div>
 
 
-    <!-- STATS -->
+<!-- FILTERS -->
 
-    <div class="stats">
+<div class="filters">
 
-      <div class="stat">
-        <div class="stat-number" id="totalCount">0</div>
-        <div class="stat-label">Total</div>
-      </div>
+<input
+  type="text"
+  id="searchBooking"
+  placeholder="Search name or phone..."
+  oninput="filterBookings()"
+>
 
-      <div class="stat">
-        <div class="stat-number" id="newCount">0</div>
-        <div class="stat-label">New</div>
-      </div>
+<select
+  id="statusFilter"
+  onchange="filterBookings()"
+>
 
-      <div class="stat">
-        <div class="stat-number" id="confirmedCount">0</div>
-        <div class="stat-label">Confirmed</div>
-      </div>
+<option value="">All Status</option>
+<option value="New">New</option>
+<option value="Confirmed">Confirmed</option>
+<option value="Completed">Completed</option>
 
-      <div class="stat">
-        <div class="stat-number" id="completedCount">0</div>
-        <div class="stat-label">Completed</div>
-      </div>
+</select>
 
-    </div>
+<input
+  type="date"
+  id="dateFilter"
+  onchange="filterBookings()"
+>
+
+</div>
 
 
-    <div id="countInfo" class="count-info"></div>
+<!-- STATS -->
 
-    <div id="bookings">
-      Loading...
-    </div>
+<div class="stats">
 
-  </div>
+<div class="stat">
+<div class="stat-number" id="totalCount">0</div>
+<div class="stat-label">Total</div>
+</div>
+
+<div class="stat">
+<div class="stat-number" id="newCount">0</div>
+<div class="stat-label">New</div>
+</div>
+
+<div class="stat">
+<div class="stat-number" id="confirmedCount">0</div>
+<div class="stat-label">Confirmed</div>
+</div>
+
+<div class="stat">
+<div class="stat-number" id="completedCount">0</div>
+<div class="stat-label">Completed</div>
+</div>
+
+</div>
+
+
+<div id="countInfo" class="count-info"></div>
+
+<div id="bookings">
+Loading...
+</div>
+
+</div>
 
 </div>
 
@@ -384,913 +427,777 @@
 <script>
 
 const BOOKING_URL =
-  "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
-
+"https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
 
 let allBookings = [];
 
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 async function login() {
 
-  const password =
-    document.getElementById("password").value.trim();
+const password =
+document.getElementById("password").value.trim();
 
-  const loginError =
-    document.getElementById("loginError");
+const loginError =
+document.getElementById("loginError");
 
-  loginError.textContent = "";
+loginError.textContent = "";
 
-  if (!password) {
-    loginError.textContent = "Password enter karo.";
-    return;
-  }
+if (!password) {
+loginError.textContent = "Password enter karo.";
+return;
+}
 
-  try {
+try {
 
-    const response = await fetch(BOOKING_URL, {
+const response = await fetch(BOOKING_URL, {
 
-      method: "POST",
+method: "POST",
 
-      body: JSON.stringify({
-        action: "adminLogin",
-        password: password
-      })
+body: JSON.stringify({
+action: "adminLogin",
+password: password
+})
 
-    });
+});
 
-    const result = await response.json();
+const result = await response.json();
 
-    if (result.success) {
+if (result.success) {
 
-      document.getElementById("loginBox").style.display = "none";
+document.getElementById("loginBox").style.display = "none";
 
-      document.getElementById("adminPanel").style.display = "block";
+document.getElementById("adminPanel").style.display = "block";
 
-      loadBookings();
+loadBookings();
 
-    } else {
+} else {
 
-      loginError.textContent = "Wrong password.";
+loginError.textContent = "Wrong password.";
 
-    }
+}
 
-  } catch (error) {
+} catch (error) {
 
-    loginError.textContent =
-      "Login connection error.";
+loginError.textContent =
+"Login connection error.";
 
-  }
+}
+
 }
 
 
-/* =========================
-   LOAD BOOKINGS
-========================= */
+/* LOAD BOOKINGS */
 
 async function loadBookings() {
 
-  const bookingsBox =
-    document.getElementById("bookings");
+const bookingsBox =
+document.getElementById("bookings");
 
-  const refreshBtn =
-    document.getElementById("refreshBtn");
+const refreshBtn =
+document.getElementById("refreshBtn");
 
-  bookingsBox.innerHTML =
-    '<div class="loading">Loading bookings...</div>';
+bookingsBox.innerHTML =
+'<div class="loading">Loading bookings...</div>';
 
-  refreshBtn.disabled = true;
-  refreshBtn.textContent = "⏳ Loading...";
+refreshBtn.disabled = true;
+refreshBtn.textContent = "⏳ Loading...";
 
-  try {
+try {
 
-    const response =
-      await fetch(BOOKING_URL, {
-        cache: "no-store"
-      });
+const response =
+await fetch(BOOKING_URL, {
+cache: "no-store"
+});
 
-    const data =
-      await response.json();
+const data =
+await response.json();
 
-    if (!data.success) {
+if (!data.success) {
+throw new Error(
+data.error || "Unable to load bookings"
+);
+}
 
-      throw new Error(
-        data.error || "Unable to load bookings"
-      );
+allBookings = data.bookings || [];
 
-    }
+updateStats();
 
-    allBookings = data.bookings || [];
+filterBookings();
 
+} catch (error) {
 
-    updateStats();
+console.error(error);
 
-    filterBookings();
+bookingsBox.innerHTML =
+"❌ Bookings load nahi ho pa rahi hain.";
 
-  } catch (error) {
+} finally {
 
-    console.error(error);
+refreshBtn.disabled = false;
+refreshBtn.textContent = "🔄 Refresh";
 
-    bookingsBox.innerHTML =
-      "❌ Bookings load nahi ho pa rahi hain.";
+}
 
-  } finally {
-
-    refreshBtn.disabled = false;
-    refreshBtn.textContent = "🔄 Refresh";
-
-  }
 }
 
 
-/* =========================
-   STATS
-========================= */
+/* STATS */
 
 function updateStats() {
 
-  document.getElementById("totalCount").textContent =
-    allBookings.length;
+document.getElementById("totalCount").textContent =
+allBookings.length;
 
-  document.getElementById("newCount").textContent =
-    allBookings.filter(
-      b => normalizeStatus(b.status) === "new"
-    ).length;
+document.getElementById("newCount").textContent =
+allBookings.filter(
+b => normalizeStatus(b.status) === "new"
+).length;
 
-  document.getElementById("confirmedCount").textContent =
-    allBookings.filter(
-      b => normalizeStatus(b.status) === "confirmed"
-    ).length;
+document.getElementById("confirmedCount").textContent =
+allBookings.filter(
+b => normalizeStatus(b.status) === "confirmed"
+).length;
 
-  document.getElementById("completedCount").textContent =
-    allBookings.filter(
-      b => normalizeStatus(b.status) === "completed"
-    ).length;
+document.getElementById("completedCount").textContent =
+allBookings.filter(
+b => normalizeStatus(b.status) === "completed"
+).length;
+
 }
 
 
-/* =========================
-   FILTER BOOKINGS
-========================= */
+/* FILTER */
 
 function filterBookings() {
 
-  const search =
-    document
-      .getElementById("searchBooking")
-      .value
-      .toLowerCase()
-      .trim();
+const search =
+document
+.getElementById("searchBooking")
+.value
+.toLowerCase()
+.trim();
 
-  const status =
-    document
-      .getElementById("statusFilter")
-      .value
-      .toLowerCase()
-      .trim();
+const status =
+document
+.getElementById("statusFilter")
+.value
+.toLowerCase()
+.trim();
 
-  const selectedDate =
-    document
-      .getElementById("dateFilter")
-      .value;
+const selectedDate =
+document
+.getElementById("dateFilter")
+.value;
 
+const filtered =
+allBookings.filter(function(booking) {
 
-  const filtered =
-    allBookings.filter(function(booking) {
+const name =
+String(booking.name || "")
+.toLowerCase();
 
-      const name =
-        String(booking.name || "")
-          .toLowerCase();
+const phone =
+String(booking.phone || "")
+.toLowerCase();
 
-      const phone =
-        String(booking.phone || "")
-          .toLowerCase();
+const bookingStatus =
+normalizeStatus(booking.status);
 
-      const bookingStatus =
-        normalizeStatus(booking.status);
+const bookingDate =
+getDateForFilter(booking.date);
 
-      const bookingDate =
-        getDateForFilter(booking.date);
+const matchesSearch =
+!search ||
+name.includes(search) ||
+phone.includes(search);
 
+const matchesStatus =
+!status ||
+bookingStatus === status;
 
-      const matchesSearch =
-        !search ||
-        name.includes(search) ||
-        phone.includes(search);
+const matchesDate =
+!selectedDate ||
+bookingDate === selectedDate;
 
+return (
+matchesSearch &&
+matchesStatus &&
+matchesDate
+);
 
-      const matchesStatus =
-        !status ||
-        bookingStatus === status;
+});
 
-
-      const matchesDate =
-        !selectedDate ||
-        bookingDate === selectedDate;
-
-
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesDate
-      );
-
-    });
-
-
-  displayBookings(filtered);
+displayBookings(filtered);
 
 }
 
 
-/* =========================
-   DISPLAY BOOKINGS
-========================= */
+/* DISPLAY */
 
 function displayBookings(bookings) {
 
-  const bookingsBox =
-    document.getElementById("bookings");
+const bookingsBox =
+document.getElementById("bookings");
 
-  const countInfo =
-    document.getElementById("countInfo");
+const countInfo =
+document.getElementById("countInfo");
 
+countInfo.textContent =
+`${bookings.length} booking${bookings.length !== 1 ? "s" : ""} shown`;
 
-  countInfo.textContent =
-    `${bookings.length} booking${bookings.length !== 1 ? "s" : ""} shown`;
+if (bookings.length === 0) {
 
+bookingsBox.innerHTML =
+'<div class="empty">No bookings found.</div>';
 
-  if (bookings.length === 0) {
+return;
 
-    bookingsBox.innerHTML =
-      '<div class="empty">No bookings found.</div>';
+}
 
-    return;
+bookingsBox.innerHTML = "";
 
-  }
+const sortedBookings =
+[...bookings].sort(function(a,b) {
 
+return Number(b.row || 0) -
+Number(a.row || 0);
 
-  bookingsBox.innerHTML = "";
+});
 
+sortedBookings.forEach(function(booking) {
 
-  const sortedBookings =
-    [...bookings].sort(function(a, b) {
+const div =
+document.createElement("div");
 
-      return Number(b.row || 0) -
-             Number(a.row || 0);
+div.className = "booking";
 
-    });
+const phone =
+String(booking.phone || "")
+.replace(/\D/g,"");
 
+const displayDate =
+formatDate(booking.date);
 
-  sortedBookings.forEach(function(booking) {
+const displayTime =
+formatTime(booking.time);
 
-    const div =
-      document.createElement("div");
+const status =
+booking.status || "New";
 
-    div.className = "booking";
+div.innerHTML = `
 
+<div class="booking-info">
 
-    const phone =
-      String(booking.phone || "")
-        .replace(/\D/g, "");
+<div>
+<strong>Name:</strong>
+${escapeHTML(booking.name)}
+</div>
 
+<div>
+<strong>Phone:</strong>
+${escapeHTML(booking.phone)}
+</div>
 
-    const displayDate =
-      formatDate(booking.date);
+<div class="contact-actions">
 
+<a
+href="tel:+91${escapeHTML(phone)}"
+class="call-btn"
+>
+📞 Call
+</a>
 
-    const displayTime =
-      formatTime(booking.time);
+<a
+href="https://wa.me/91${escapeHTML(phone)}"
+target="_blank"
+class="whatsapp-btn"
+>
+💬 WhatsApp
+</a>
 
+</div>
 
-    const status =
-      booking.status || "New";
+<div>
+<strong>Service:</strong>
+${escapeHTML(booking.service)}
+</div>
 
+<div>
+<strong>Date:</strong>
+${escapeHTML(displayDate)}
+</div>
 
-    div.innerHTML = `
+<div>
+<strong>Time:</strong>
+${escapeHTML(displayTime)}
+</div>
 
-      <div class="booking-info">
+</div>
 
-        <div>
-          <strong>Name:</strong>
-          ${escapeHTML(booking.name)}
-        </div>
+<div class="status">
+Status: ${escapeHTML(status)}
+</div>
 
-        <div>
-          <strong>Phone:</strong>
-          ${escapeHTML(booking.phone)}
-        </div>
+<div class="actions">
 
-        <div class="contact-actions">
+<button
+onclick="updateStatus(${Number(booking.row)},'Confirmed')"
+>
+✅ Confirm
+</button>
 
-          <a
-            href="tel:+91${escapeHTML(phone)}"
-            class="call-btn"
-          >
-            📞 Call
-          </a>
+<button
+onclick="updateStatus(${Number(booking.row)},'Completed')"
+>
+✔️ Completed
+</button>
 
-          <a
-            href="https://wa.me/91${escapeHTML(phone)}"
-            target="_blank"
-            class="whatsapp-btn"
-          >
-            💬 WhatsApp
-          </a>
+<button
+onclick="updateStatus(${Number(booking.row)},'Cancelled')"
+>
+❌ Cancel
+</button>
 
-        </div>
+<button
+onclick="updateStatus(${Number(booking.row)},'New')"
+>
+🔄 New
+</button>
 
-        <div>
-          <strong>Service:</strong>
-          ${escapeHTML(booking.service)}
-        </div>
+</div>
 
-        <div>
-          <strong>Date:</strong>
-          ${escapeHTML(displayDate)}
-        </div>
+`;
 
-        <div>
-          <strong>Time:</strong>
-          ${escapeHTML(displayTime)}
-        </div>
+bookingsBox.appendChild(div);
 
-      </div>
-
-
-      <div class="status">
-        Status:
-        ${escapeHTML(status)}
-      </div>
-
-
-      <div class="actions">
-
-        <button
-          onclick="updateStatus(${Number(booking.row)}, 'Confirmed')"
-        >
-          ✅ Confirm
-        </button>
-
-        <button
-          onclick="updateStatus(${Number(booking.row)}, 'Completed')"
-        >
-          ✔️ Completed
-        </button>
-
-        <button
-          onclick="updateStatus(${Number(booking.row)}, 'Cancelled')"
-        >
-          ❌ Cancel
-        </button>
-
-        <button
-          onclick="updateStatus(${Number(booking.row)}, 'New')"
-        >
-          🔄 New
-        </button>
-
-      </div>
-
-    `;
-
-
-    bookingsBox.appendChild(div);
-
-  });
+});
 
 }
 
 
-/* =========================
-   UPDATE STATUS
-========================= */
+/* UPDATE STATUS */
 
-async function updateStatus(row, status) {
+async function updateStatus(row,status) {
 
-  try {
+try {
 
-    const response =
-      await fetch(BOOKING_URL, {
+const response =
+await fetch(BOOKING_URL, {
 
-        method: "POST",
+method:"POST",
 
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
 
-        body: JSON.stringify({
+body:JSON.stringify({
 
-          action: "updateStatus",
+action:"updateStatus",
+row:row,
+status:status
 
-          row: row,
+})
 
-          status: status
+});
 
-        })
+const result =
+await response.json();
 
-      });
+if (!result.success) {
 
+throw new Error(
+result.error ||
+"Status update failed"
+);
 
-    const result =
-      await response.json();
+}
 
+const booking =
+allBookings.find(
+b => Number(b.row) === Number(row)
+);
 
-    if (!result.success) {
+if (booking) {
+booking.status = status;
+}
 
-      throw new Error(
-        result.error || "Status update failed"
-      );
+updateStats();
 
-    }
+filterBookings();
 
+} catch(error) {
 
-    /* Update local data immediately */
+alert(
+"Status update failed: " +
+error.message
+);
 
-    const booking =
-      allBookings.find(
-        b => Number(b.row) === Number(row)
-      );
-
-
-    if (booking) {
-      booking.status = status;
-    }
-
-
-    updateStats();
-
-    filterBookings();
-
-
-  } catch (error) {
-
-    alert(
-      "Status update failed: " +
-      error.message
-    );
-
-  }
+}
 
 }
 
 
-/* =========================
-   EXPORT BOOKINGS
-========================= */
+/* EXPORT */
 
 function exportBookings() {
 
-  if (allBookings.length === 0) {
+if (allBookings.length === 0) {
 
-    alert("Export karne ke liye koi booking nahi hai.");
+alert(
+"Export karne ke liye koi booking nahi hai."
+);
 
-    return;
+return;
 
-  }
+}
 
+const headers = [
+"Name",
+"Phone",
+"Service",
+"Date",
+"Time",
+"Status"
+];
 
-  const headers = [
-    "Name",
-    "Phone",
-    "Service",
-    "Date",
-    "Time",
-    "Status"
-  ];
+const rows =
+allBookings.map(function(booking) {
 
+return [
 
-  const rows =
-    allBookings.map(function(booking) {
+booking.name || "",
+booking.phone || "",
+booking.service || "",
+formatDate(booking.date),
+formatTime(booking.time),
+booking.status || "New"
 
-      return [
+];
 
-        booking.name || "",
+});
 
-        booking.phone || "",
+const csv =
+[headers,...rows]
+.map(function(row) {
 
-        booking.service || "",
+return row.map(function(value) {
 
-        formatDate(booking.date),
+return `"${String(value)
+.replace(/"/g,'""')}"`;
 
-        formatTime(booking.time),
+}).join(",");
 
-        booking.status || "New"
+})
+.join("\n");
 
-      ];
+const blob =
+new Blob(
+["\ufeff" + csv],
+{
+type:"text/csv;charset=utf-8;"
+}
+);
 
-    });
+const url =
+URL.createObjectURL(blob);
 
+const link =
+document.createElement("a");
 
-  const csv = [
+link.href = url;
 
-    headers,
+link.download =
+"Dreamzz-Spa-Bookings.csv";
 
-    ...rows
+document.body.appendChild(link);
 
-  ].map(function(row) {
+link.click();
 
-    return row.map(function(value) {
+document.body.removeChild(link);
 
-      return `"${String(value)
-        .replace(/"/g, '""')}"`;
-
-    }).join(",");
-
-  }).join("\n");
-
-
-  const blob =
-    new Blob(
-      ["\ufeff" + csv],
-      { type: "text/csv;charset=utf-8;" }
-    );
-
-
-  const url =
-    URL.createObjectURL(blob);
-
-
-  const link =
-    document.createElement("a");
-
-
-  link.href = url;
-
-  link.download =
-    "Dreamzz-Spa-Bookings.csv";
-
-
-  document.body.appendChild(link);
-
-  link.click();
-
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
+URL.revokeObjectURL(url);
 
 }
 
 
-/* =========================
-   DATE FORMAT
-========================= */
+/* DATE */
 
-function formatDate(dateValue) {
+function formatDate(value) {
 
-  if (!dateValue) return "";
+if (!value) return "";
 
+const date =
+parseDateValue(value);
 
-  const date =
-    parseDateValue(dateValue);
+if (!date)
+return String(value);
 
+const day =
+String(date.getDate()).padStart(2,"0");
 
-  if (!date) {
+const month =
+String(date.getMonth()+1).padStart(2,"0");
 
-    return String(dateValue);
+const year =
+String(date.getFullYear()).slice(-2);
 
-  }
-
-
-  const day =
-    String(date.getDate())
-      .padStart(2, "0");
-
-  const month =
-    String(date.getMonth() + 1)
-      .padStart(2, "0");
-
-  const year =
-    String(date.getFullYear())
-      .slice(-2);
-
-
-  return `${day}-${month}-${year}`;
+return `${day}-${month}-${year}`;
 
 }
 
 
-/* =========================
-   TIME FORMAT
-========================= */
+/* TIME */
 
-function formatTime(timeValue) {
+function formatTime(value) {
 
-  if (!timeValue) return "";
+if (!value) return "";
 
+const str =
+String(value).trim();
 
-  const value =
-    String(timeValue).trim();
+if (
+/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i
+.test(str)
+) {
 
+return str
+.replace(/\s+/g," ")
+.toUpperCase();
 
-  /* Already normal text like 6:30 AM */
+}
 
-  if (
-    /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i
-      .test(value)
-  ) {
+const date =
+parseTimeValue(str);
 
-    return value
-      .replace(/\s+/g, " ")
-      .toUpperCase();
+if (!date)
+return str;
 
-  }
-
-
-  /* Google Sheet time/date */
-
-  const date =
-    parseTimeValue(value);
-
-
-  if (!date) {
-
-    return value;
-
-  }
-
-
-  return date.toLocaleTimeString(
-    "en-US",
-    {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true
-    }
-  );
+return date.toLocaleTimeString(
+"en-US",
+{
+hour:"numeric",
+minute:"2-digit",
+hour12:true
+}
+);
 
 }
 
 
-/* =========================
-   DATE FOR FILTER
-========================= */
+/* DATE FILTER */
 
 function getDateForFilter(value) {
 
-  if (!value) return "";
+if (!value) return "";
 
+const str =
+String(value).trim();
 
-  const str =
-    String(value).trim();
+const match =
+str.match(
+/^(\d{4})-(\d{2})-(\d{2})/
+);
 
+if (match) {
 
-  /* ISO date from Apps Script */
+return (
+match[1] + "-" +
+match[2] + "-" +
+match[3]
+);
 
-  const isoMatch =
-    str.match(
-      /^(\d{4})-(\d{2})-(\d{2})/
-    );
+}
 
+const date =
+parseDateValue(str);
 
-  if (isoMatch) {
+if (!date) return "";
 
-    return (
-      isoMatch[1] +
-      "-" +
-      isoMatch[2] +
-      "-" +
-      isoMatch[3]
-    );
-
-  }
-
-
-  const date =
-    parseDateValue(str);
-
-
-  if (!date) return "";
-
-
-  return (
-    date.getFullYear() +
-    "-" +
-    String(date.getMonth() + 1)
-      .padStart(2, "0") +
-    "-" +
-    String(date.getDate())
-      .padStart(2, "0")
-  );
+return (
+date.getFullYear() + "-" +
+String(date.getMonth()+1).padStart(2,"0") + "-" +
+String(date.getDate()).padStart(2,"0")
+);
 
 }
 
 
-/* =========================
-   PARSE DATE
-========================= */
+/* PARSE DATE */
 
 function parseDateValue(value) {
 
-  if (!value) return null;
+if (!value) return null;
 
+const str =
+String(value).trim();
 
-  const str =
-    String(value).trim();
+let match =
+str.match(
+/^(\d{4})-(\d{2})-(\d{2})/
+);
 
+if (match) {
 
-  /* YYYY-MM-DD */
+return new Date(
+Number(match[1]),
+Number(match[2])-1,
+Number(match[3])
+);
 
-  let match =
-    str.match(
-      /^(\d{4})-(\d{2})-(\d{2})/
-    );
+}
 
+match =
+str.match(
+/^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+);
 
-  if (match) {
+if (match) {
 
-    return new Date(
-      Number(match[1]),
-      Number(match[2]) - 1,
-      Number(match[3])
-    );
+return new Date(
+Number(match[3]),
+Number(match[1])-1,
+Number(match[2])
+);
 
-  }
+}
 
+const date =
+new Date(str);
 
-  /* MM/DD/YYYY */
+if (isNaN(date.getTime()))
+return null;
 
-  match =
-    str.match(
-      /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
-    );
-
-
-  if (match) {
-
-    return new Date(
-      Number(match[3]),
-      Number(match[1]) - 1,
-      Number(match[2])
-    );
-
-  }
-
-
-  const date =
-    new Date(str);
-
-
-  if (isNaN(date.getTime())) {
-    return null;
-  }
-
-
-  return date;
+return date;
 
 }
 
 
-/* =========================
-   PARSE TIME
-========================= */
+/* PARSE TIME */
 
 function parseTimeValue(value) {
 
-  if (!value) return null;
+if (!value) return null;
 
+const str =
+String(value).trim();
 
-  const str =
-    String(value).trim();
+let match =
+str.match(
+/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
+);
 
+if (match) {
 
-  /* Time only: 11:38:50 */
+const date =
+new Date(2000,0,1);
 
-  let match =
-    str.match(
-      /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
-    );
+date.setHours(
+Number(match[1]),
+Number(match[2]),
+Number(match[3] || 0),
+0
+);
 
+return date;
 
-  if (match) {
+}
 
-    const date =
-      new Date(2000, 0, 1);
+match =
+str.match(
+/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i
+);
 
-    date.setHours(
-      Number(match[1]),
-      Number(match[2]),
-      Number(match[3] || 0),
-      0
-    );
+if (match) {
 
-    return date;
+let hour =
+Number(match[1]);
 
-  }
+const minute =
+Number(match[2]);
 
+const ampm =
+match[3].toUpperCase();
 
-  /* Time with AM/PM */
+if (
+ampm === "PM" &&
+hour !== 12
+) {
+hour += 12;
+}
 
-  match =
-    str.match(
-      /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i
-    );
+if (
+ampm === "AM" &&
+hour === 12
+) {
+hour = 0;
+}
 
+const date =
+new Date(2000,0,1);
 
-  if (match) {
+date.setHours(
+hour,
+minute,
+0,
+0
+);
 
-    let hour =
-      Number(match[1]);
+return date;
 
-    const minute =
-      Number(match[2]);
+}
 
-    const ampm =
-      match[3].toUpperCase();
+const date =
+new Date(str);
 
+if (isNaN(date.getTime()))
+return null;
 
-    if (ampm === "PM" && hour !== 12) {
-      hour += 12;
-    }
+if (date.getFullYear() === 1899) {
 
-    if (ampm === "AM" && hour === 12) {
-      hour = 0;
-    }
+const fixed =
+new Date(2000,0,1);
 
+fixed.setHours(
+date.getHours(),
+date.getMinutes(),
+date.getSeconds(),
+0
+);
 
-    const date =
-      new Date(2000, 0, 1);
+return fixed;
 
-    date.setHours(
-      hour,
-      minute,
-      0,
-      0
-    );
+}
 
-    return date;
-
-  }
-
-
-  /* Full ISO date */
-
-  const date =
-    new Date(str);
-
-
-  if (isNaN(date.getTime())) {
-    return null;
-  }
-
-
-  /*
-    Ignore 1899 date from Google Sheet
-    and use only its time.
-  */
-
-  if (date.getFullYear() === 1899) {
-
-    const fixed =
-      new Date(2000, 0, 1);
-
-    fixed.setHours(
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      0
-    );
-
-    return fixed;
-
-  }
-
-
-  return date;
+return date;
 
 }
 
 
-/* =========================
-   STATUS NORMALIZE
-========================= */
+/* STATUS */
 
 function normalizeStatus(status) {
 
-  return String(status || "New")
-    .toLowerCase()
-    .trim();
+return String(status || "New")
+.toLowerCase()
+.trim();
 
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ESCAPE */
 
 function escapeHTML(text) {
 
-  const div =
-    document.createElement("div");
+const div =
+document.createElement("div");
 
-  div.textContent =
-    text ?? "";
+div.textContent =
+text ?? "";
 
-  return div.innerHTML;
+return div.innerHTML;
 
 }
 
