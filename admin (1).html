@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dreamzz Spa Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #111;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .sub {
+      color: #666;
+      margin: 5px 0 20px;
+    }
+
+    .login,
+    .admin {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 13px;
+      cursor: pointer;
+      font-size: 14px;
+      background: #111;
+      color: white;
+    }
+
+    .error {
+      color: #d00;
+      margin-top: 10px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: #f7f7f7;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .booking {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .booking-info {
+      line-height: 1.7;
+    }
+
+    .booking-info strong {
+      display: inline-block;
+      min-width: 80px;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .actions button {
+      background: #eee;
+      color: #111;
+    }
+
+    .actions button:hover {
+      background: #ddd;
+    }
+
+    .empty {
+      color: #666;
+      padding: 20px 0;
+    }
+
+    .loading {
+      padding: 20px 0;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 12px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .booking-info strong {
+        min-width: 70px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Dreamzz Spa Admin</h1>
+  <div class="sub">Booking Management</div>
+
+
+  <!-- LOGIN -->
+
+  <div class="login" id="loginBox">
+
+    <h3>Admin Login</h3>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter admin password"
+    >
+
+    <button onclick="login()">
+      Login
+    </button>
+
+    <div class="error" id="loginError"></div>
+
+  </div>
+
+
+  <!-- ADMIN -->
+
+  <div class="admin" id="adminPanel" style="display:none;">
+
+    <div class="topbar">
+
+      <div>
+        <h3 style="margin:0;">Bookings</h3>
+      </div>
+
+      <button onclick="loadBookings()">
+        🔄 Refresh
+      </button>
+
+      <button onclick="exportBookings()" style="margin-top:10px;">
+  📥 Export Bookings
+</button>
+
+<div style="margin-top:15px; display:flex; gap:8px; flex-wrap:wrap;">
+  <input
+    type="text"
+    id="searchBooking"
+    placeholder="Search name or phone..."
+    oninput="filterBookings()"
+    style="padding:10px; border:1px solid #ddd; border-radius:8px; flex:1;"
+  >
+
+  <select
+    id="statusFilter"
+    onchange="filterBookings()"
+    style="padding:10px; border:1px solid #ddd; border-radius:8px;"
+  >
+    <option value="">All Status</option>
+    <option value="New">New</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+
+<option value="Cancelled">Cancelled</option>
+</select>
+
+<input
+  type="date"
+  id="dateFilter"
+  onchange="filterBookings()"
+  style="padding:10px; border:1px solid #ddd; border-radius:8px;"
+>
+
+
+</div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label">Total</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="newCount">0</div>
+        <div class="stat-label">New</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="confirmedCount">0</div>
+        <div class="stat-label">Confirmed</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="completedCount">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+
+    </div>
+
+
+    <div id="bookings">
+      Loading...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const ADMIN_PASSWORD = "dreamzz123";
+
+const BOOKING_URL =
+  "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login() {
+  const password =
+    document.getElementById("password").value;
+
+  try {
+    const response = await fetch(BOOKING_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "adminLogin",
+        password: password
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      loadBookings();
+    } else {
+      alert("Wrong password");
+    }
+
+  } catch (error) {
+    alert("Login connection error");
+  }
+}
+
+
+/* =========================
+   LOAD BOOKINGS
+========================= */
+
+async function loadBookings() {
+
+  const bookingsBox =
+    document.getElementById("bookings");
+
+  bookingsBox.innerHTML =
+    '<div class="loading">Loading bookings...</div>';
+
+  try {
+
+    const response =
+      await fetch(BOOKING_URL);
+
+    const data =
+      await response.json();
+
+    if (!data.success) {
+
+      throw new Error(
+        data.error || "Unable to load bookings"
+      );
+
+    }
+
+    const bookings =
+      data.bookings || [];
+
+
+    /* STATS */
+
+    document.getElementById("totalCount").textContent =
+      bookings.length;
+
+    document.getElementById("newCount").textContent =
+      bookings.filter(b => b.status === "New").length;
+
+    document.getElementById("confirmedCount").textContent =
+      bookings.filter(b => b.status === "Confirmed").length;
+
+    document.getElementById("completedCount").textContent =
+      bookings.filter(b => b.status === "Completed").length;
+
+
+    /* EMPTY */
+
+    if (bookings.length === 0) {
+
+      bookingsBox.innerHTML =
+        '<div class="empty">No bookings yet.</div>';
+
+      return;
+
+    }
+
+
+    bookingsBox.innerHTML = "";
+
+
+    /* SHOW BOOKINGS */
+
+    bookings.reverse().forEach(function(booking) {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "booking";
+
+
+      div.innerHTML = `
+
+        <div class="booking-info">
+
+          <div>
+            <strong>Name:</strong>
+            ${escapeHTML(booking.name)}
+          </div>
+
+          <div>
+            <strong>Phone:</strong>
+            ${escapeHTML(booking.phone)}
+          </div>
+
+          <div style="margin-top:8px;">
+  <a
+    href="tel:+91${escapeHTML(booking.phone)}"
+    style="display:inline-block;padding:7px 12px;background:#111;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
+  >
+    📞 Call
+  </a>
+
+  <a
+    href="https://wa.me/91${escapeHTML(booking.phone)}"
+    target="_blank"
+    style="display:inline-block;margin-left:5px;padding:7px 12px;background:#25D366;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
+  >
+    💬 WhatsApp
+  </a>
+</div>
+
+          <div>
+            <strong>Service:</strong>
+            ${escapeHTML(booking.service)}
+          </div>
+
+          <div>
+            <strong>Date:</strong>
+            ${escapeHTML(booking.date)}
+          </div>
+
+          <div>
+            <strong>Time:</strong>
+            ${escapeHTML(booking.time)}
+          </div>
+
+        </div>
+
+
+        <div class="status">
+          Status:
+          ${escapeHTML(booking.status)}
+        </div>
+
+
+        <div class="actions">
+
+          <button onclick="updateStatus(${booking.row}, 'Confirmed')">
+            ✅ Confirm
+          </button>
+
+          <button onclick="updateStatus(${booking.row}, 'Completed')">
+            ✔️ Completed
+          </button>
+
+          <button onclick="updateStatus(${booking.row}, 'Cancelled')">
+            ❌ Cancel
+          </button>
+
+          <button onclick="updateStatus(${booking.row}, 'New')">
+            🔄 New
+          </button>
+
+        </div>
+
+      `;
+
+      bookingsBox.appendChild(div);
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    bookingsBox.innerHTML =
+      "❌ Bookings load nahi ho pa rahi hain.<br><br>" +
+      escapeHTML(error.message);
+
+  }
+
+}
+
+
+/* =========================
+   UPDATE STATUS
+========================= */
+
+async function updateStatus(row, status) {
+
+  try {
+
+    const response =
+      await fetch(BOOKING_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+
+          action: "updateStatus",
+
+          row: row,
+
+          status: status
+
+        })
+
+      });
+
+
+    /*
+      Apps Script doPost currently saves
+      normal bookings.
+
+      So we use a special status update
+      request through the same endpoint.
+    */
+
+    await response.text();
+
+    alert("Status update request sent.");
+
+    loadBookings();
+
+  } catch (error) {
+
+    alert(
+      "Status update failed: " +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text ?? "";
+
+  return div.innerHTML;
+
+}
+
+function filterBookings() {
+  const search = document
+    .getElementById("searchBooking")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const status = document
+    .getElementById("statusFilter")
+    .value
+    .toLowerCase();
+
+  const filtered = allBookings.filter(booking => {
+    const matchesSearch =
+      !search ||
+      booking.name.toLowerCase().includes(search) ||
+      booking.phone.toLowerCase().includes(search);
+
+    const matchesStatus =
+      !status ||
+      booking.status.toLowerCase() === status;
+
+    const selectedDate = document.getElementById("dateFilter").value;
+
+const matchesDate =
+  !selectedDate ||
+  booking.date === selectedDate;
+
+return matchesSearch && matchesStatus && matchesDate;
+  });
+
+  displayBookings(filtered);
+}
+
+
+</script>
+
+</body>
+</html>
