@@ -116,7 +116,7 @@
 
   <div class="header">
     <h2>Dreamzz Spa</h2>
-    <p>Online • AI Receptionist</p>
+    <p>Online • Kajal</p>
   </div>
 
   <div id="chat">
@@ -137,10 +137,51 @@
       placeholder="Type your message..."
       autocomplete="off"
     >
+    </button>
 
     <button id="sendButton" onclick="sendMessage()">
-      Send
-    </button>
+  Send
+</button>
+
+<a
+  href="https://wa.me/917011030144?text=Hello%20Dreamzz%20Spa%2C%20mujhe%20booking%20karni%20hai."
+  target="_blank"
+  style="
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    margin-top:8px;
+    margin-left:6px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    border-radius:50%;
+    font-size:22px;
+  "
+  title="WhatsApp Booking"
+>
+  💬
+</a>
+
+<a
+  href="tel:+917011030144"
+  style="
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 6px;
+    padding: 8px 14px;
+    background: #111;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  "
+>
+  📞 Call Now
+</a>
 
   </div>
 
@@ -153,7 +194,7 @@
   // ==================================================
 
   // Yahan apni NEW working Gemini API key paste karo.
-  const API_KEY = "AQ.Ab8RN6KhuFCAlPeNXNrdzkFJRtQcvIGxirnNNWnBTUvXa71Y4Q";
+  const API_KEY = "AQ.Ab8RN6K7s4hz562CdQO5WV8FM_80R1tFGutgxn1zw7nWZHNAyA";
 
 
   // ==================================================
@@ -714,16 +755,14 @@ ${message}
 
           botMessage.textContent =
             reply +
-            "\n\n✅ Booking details Google Sheet me record ho gaye hain.";
+            "\n\n✅ Thank you! Aapki booking request receive ho gayi hai. Hum jald hi aapse contact karenge. 😊";
 
         } else {
 
-          botMessage.textContent =
-            reply +
-            "\n\n⚠️ Booking details save karne me problem aayi. Please 7011030144 par contact karein.";
+  botMessage.textContent =
+    reply;
 
-        }
-
+}
       }
 
 
