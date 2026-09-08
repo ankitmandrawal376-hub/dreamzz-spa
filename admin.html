@@ -26,6 +26,7 @@
 
     h1 {
       margin: 0;
+      font-size: 32px;
     }
 
     .sub {
@@ -40,23 +41,42 @@
       border-radius: 14px;
     }
 
+    input,
+    select {
+      font-family: inherit;
+      font-size: 14px;
+    }
+
     input {
       width: 100%;
       padding: 12px;
-      margin: 8px 0;
       border: 1px solid #ddd;
       border-radius: 8px;
-      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #999;
     }
 
     button {
       border: 0;
       border-radius: 8px;
-      padding: 9px 13px;
+      padding: 10px 14px;
       cursor: pointer;
       font-size: 14px;
       background: #111;
       color: white;
+    }
+
+    button:hover {
+      opacity: 0.88;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .error {
@@ -64,14 +84,43 @@
       margin-top: 10px;
     }
 
+    /* TOP BAR */
+
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* FILTERS */
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 150px 180px;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .filters input,
+    .filters select {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+
+    /* STATS */
 
     .stats {
       display: grid;
@@ -98,11 +147,14 @@
       margin-top: 4px;
     }
 
+    /* BOOKINGS */
+
     .booking {
       border: 1px solid #ddd;
       border-radius: 12px;
       padding: 16px;
       margin: 12px 0;
+      background: white;
     }
 
     .booking-info {
@@ -111,7 +163,32 @@
 
     .booking-info strong {
       display: inline-block;
-      min-width: 80px;
+      min-width: 75px;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 7px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .call-btn,
+    .whatsapp-btn {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .call-btn {
+      background: #111;
+    }
+
+    .whatsapp-btn {
+      background: #25D366;
     }
 
     .status {
@@ -135,20 +212,33 @@
       background: #ddd;
     }
 
-    .empty {
-      color: #666;
-      padding: 20px 0;
-    }
-
+    .empty,
     .loading {
-      padding: 20px 0;
       color: #666;
+      padding: 20px 0;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
+    .count-info {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
 
       .container {
         padding: 12px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
       }
 
       .stats {
@@ -159,10 +249,13 @@
         align-items: flex-start;
       }
 
-      .booking-info strong {
-        min-width: 70px;
+      .top-actions {
+        width: 100%;
       }
 
+      .top-actions button {
+        flex: 1;
+      }
     }
   </style>
 </head>
@@ -173,7 +266,6 @@
 
   <h1>Dreamzz Spa Admin</h1>
   <div class="sub">Booking Management</div>
-
 
   <!-- LOGIN -->
 
@@ -206,47 +298,47 @@
         <h3 style="margin:0;">Bookings</h3>
       </div>
 
-      <button onclick="loadBookings()">
-        🔄 Refresh
-      </button>
+      <div class="top-actions">
 
-      <button onclick="exportBookings()" style="margin-top:10px;">
-  📥 Export Bookings
-</button>
+        <button id="refreshBtn" onclick="loadBookings()">
+          🔄 Refresh
+        </button>
 
-<div style="margin-top:15px; display:flex; gap:8px; flex-wrap:wrap;">
-  <input
-    type="text"
-    id="searchBooking"
-    placeholder="Search name or phone..."
-    oninput="filterBookings()"
-    style="padding:10px; border:1px solid #ddd; border-radius:8px; flex:1;"
-  >
+        <button onclick="exportBookings()">
+          📥 Export
+        </button>
 
-  <select
-    id="statusFilter"
-    onchange="filterBookings()"
-    style="padding:10px; border:1px solid #ddd; border-radius:8px;"
-  >
-    <option value="">All Status</option>
-    <option value="New">New</option>
-    <option value="Confirmed">Confirmed</option>
-    <option value="Completed">Completed</option>
-    <option value="Cancelled">Cancelled</option>
-  </select>
+      </div>
 
-<option value="Cancelled">Cancelled</option>
-</select>
-
-<input
-  type="date"
-  id="dateFilter"
-  onchange="filterBookings()"
-  style="padding:10px; border:1px solid #ddd; border-radius:8px;"
->
+    </div>
 
 
-</div>
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+      <input
+        type="text"
+        id="searchBooking"
+        placeholder="Search name or phone..."
+        oninput="filterBookings()"
+      >
+
+      <select
+        id="statusFilter"
+        onchange="filterBookings()"
+      >
+        <option value="">All Status</option>
+        <option value="New">New</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Completed">Completed</option>
+      </select>
+
+      <input
+        type="date"
+        id="dateFilter"
+        onchange="filterBookings()"
+      >
 
     </div>
 
@@ -278,6 +370,8 @@
     </div>
 
 
+    <div id="countInfo" class="count-info"></div>
+
     <div id="bookings">
       Loading...
     </div>
@@ -289,10 +383,11 @@
 
 <script>
 
-const ADMIN_PASSWORD = "dreamzz123";
-
 const BOOKING_URL =
   "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
+
+
+let allBookings = [];
 
 
 /* =========================
@@ -300,30 +395,54 @@ const BOOKING_URL =
 ========================= */
 
 async function login() {
+
   const password =
-    document.getElementById("password").value;
+    document.getElementById("password").value.trim();
+
+  const loginError =
+    document.getElementById("loginError");
+
+  loginError.textContent = "";
+
+  if (!password) {
+    loginError.textContent = "Password enter karo.";
+    return;
+  }
 
   try {
+
     const response = await fetch(BOOKING_URL, {
+
       method: "POST",
+
       body: JSON.stringify({
         action: "adminLogin",
         password: password
       })
+
     });
 
     const result = await response.json();
 
     if (result.success) {
+
       document.getElementById("loginBox").style.display = "none";
+
       document.getElementById("adminPanel").style.display = "block";
+
       loadBookings();
+
     } else {
-      alert("Wrong password");
+
+      loginError.textContent = "Wrong password.";
+
     }
 
   } catch (error) {
-    alert("Login connection error");
+
+    loginError.textContent =
+      "Login connection error.";
+
   }
 }
 
@@ -337,13 +456,21 @@ async function loadBookings() {
   const bookingsBox =
     document.getElementById("bookings");
 
+  const refreshBtn =
+    document.getElementById("refreshBtn");
+
   bookingsBox.innerHTML =
     '<div class="loading">Loading bookings...</div>';
+
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = "⏳ Loading...";
 
   try {
 
     const response =
-      await fetch(BOOKING_URL);
+      await fetch(BOOKING_URL, {
+        cache: "no-store"
+      });
 
     const data =
       await response.json();
@@ -356,140 +483,284 @@ async function loadBookings() {
 
     }
 
-    const bookings =
-      data.bookings || [];
+    allBookings = data.bookings || [];
 
 
-    /* STATS */
+    updateStats();
 
-    document.getElementById("totalCount").textContent =
-      bookings.length;
-
-    document.getElementById("newCount").textContent =
-      bookings.filter(b => b.status === "New").length;
-
-    document.getElementById("confirmedCount").textContent =
-      bookings.filter(b => b.status === "Confirmed").length;
-
-    document.getElementById("completedCount").textContent =
-      bookings.filter(b => b.status === "Completed").length;
-
-
-    /* EMPTY */
-
-    if (bookings.length === 0) {
-
-      bookingsBox.innerHTML =
-        '<div class="empty">No bookings yet.</div>';
-
-      return;
-
-    }
-
-
-    bookingsBox.innerHTML = "";
-
-
-    /* SHOW BOOKINGS */
-
-    bookings.reverse().forEach(function(booking) {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "booking";
-
-
-      div.innerHTML = `
-
-        <div class="booking-info">
-
-          <div>
-            <strong>Name:</strong>
-            ${escapeHTML(booking.name)}
-          </div>
-
-          <div>
-            <strong>Phone:</strong>
-            ${escapeHTML(booking.phone)}
-          </div>
-
-          <div style="margin-top:8px;">
-  <a
-    href="tel:+91${escapeHTML(booking.phone)}"
-    style="display:inline-block;padding:7px 12px;background:#111;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
-  >
-    📞 Call
-  </a>
-
-  <a
-    href="https://wa.me/91${escapeHTML(booking.phone)}"
-    target="_blank"
-    style="display:inline-block;margin-left:5px;padding:7px 12px;background:#25D366;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
-  >
-    💬 WhatsApp
-  </a>
-</div>
-
-          <div>
-            <strong>Service:</strong>
-            ${escapeHTML(booking.service)}
-          </div>
-
-          <div>
-            <strong>Date:</strong>
-            ${escapeHTML(booking.date)}
-          </div>
-
-          <div>
-            <strong>Time:</strong>
-            ${escapeHTML(booking.time)}
-          </div>
-
-        </div>
-
-
-        <div class="status">
-          Status:
-          ${escapeHTML(booking.status)}
-        </div>
-
-
-        <div class="actions">
-
-          <button onclick="updateStatus(${booking.row}, 'Confirmed')">
-            ✅ Confirm
-          </button>
-
-          <button onclick="updateStatus(${booking.row}, 'Completed')">
-            ✔️ Completed
-          </button>
-
-          <button onclick="updateStatus(${booking.row}, 'Cancelled')">
-            ❌ Cancel
-          </button>
-
-          <button onclick="updateStatus(${booking.row}, 'New')">
-            🔄 New
-          </button>
-
-        </div>
-
-      `;
-
-      bookingsBox.appendChild(div);
-
-    });
+    filterBookings();
 
   } catch (error) {
 
     console.error(error);
 
     bookingsBox.innerHTML =
-      "❌ Bookings load nahi ho pa rahi hain.<br><br>" +
-      escapeHTML(error.message);
+      "❌ Bookings load nahi ho pa rahi hain.";
+
+  } finally {
+
+    refreshBtn.disabled = false;
+    refreshBtn.textContent = "🔄 Refresh";
 
   }
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats() {
+
+  document.getElementById("totalCount").textContent =
+    allBookings.length;
+
+  document.getElementById("newCount").textContent =
+    allBookings.filter(
+      b => normalizeStatus(b.status) === "new"
+    ).length;
+
+  document.getElementById("confirmedCount").textContent =
+    allBookings.filter(
+      b => normalizeStatus(b.status) === "confirmed"
+    ).length;
+
+  document.getElementById("completedCount").textContent =
+    allBookings.filter(
+      b => normalizeStatus(b.status) === "completed"
+    ).length;
+}
+
+
+/* =========================
+   FILTER BOOKINGS
+========================= */
+
+function filterBookings() {
+
+  const search =
+    document
+      .getElementById("searchBooking")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const status =
+    document
+      .getElementById("statusFilter")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const selectedDate =
+    document
+      .getElementById("dateFilter")
+      .value;
+
+
+  const filtered =
+    allBookings.filter(function(booking) {
+
+      const name =
+        String(booking.name || "")
+          .toLowerCase();
+
+      const phone =
+        String(booking.phone || "")
+          .toLowerCase();
+
+      const bookingStatus =
+        normalizeStatus(booking.status);
+
+      const bookingDate =
+        getDateForFilter(booking.date);
+
+
+      const matchesSearch =
+        !search ||
+        name.includes(search) ||
+        phone.includes(search);
+
+
+      const matchesStatus =
+        !status ||
+        bookingStatus === status;
+
+
+      const matchesDate =
+        !selectedDate ||
+        bookingDate === selectedDate;
+
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesDate
+      );
+
+    });
+
+
+  displayBookings(filtered);
+
+}
+
+
+/* =========================
+   DISPLAY BOOKINGS
+========================= */
+
+function displayBookings(bookings) {
+
+  const bookingsBox =
+    document.getElementById("bookings");
+
+  const countInfo =
+    document.getElementById("countInfo");
+
+
+  countInfo.textContent =
+    `${bookings.length} booking${bookings.length !== 1 ? "s" : ""} shown`;
+
+
+  if (bookings.length === 0) {
+
+    bookingsBox.innerHTML =
+      '<div class="empty">No bookings found.</div>';
+
+    return;
+
+  }
+
+
+  bookingsBox.innerHTML = "";
+
+
+  const sortedBookings =
+    [...bookings].sort(function(a, b) {
+
+      return Number(b.row || 0) -
+             Number(a.row || 0);
+
+    });
+
+
+  sortedBookings.forEach(function(booking) {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "booking";
+
+
+    const phone =
+      String(booking.phone || "")
+        .replace(/\D/g, "");
+
+
+    const displayDate =
+      formatDate(booking.date);
+
+
+    const displayTime =
+      formatTime(booking.time);
+
+
+    const status =
+      booking.status || "New";
+
+
+    div.innerHTML = `
+
+      <div class="booking-info">
+
+        <div>
+          <strong>Name:</strong>
+          ${escapeHTML(booking.name)}
+        </div>
+
+        <div>
+          <strong>Phone:</strong>
+          ${escapeHTML(booking.phone)}
+        </div>
+
+        <div class="contact-actions">
+
+          <a
+            href="tel:+91${escapeHTML(phone)}"
+            class="call-btn"
+          >
+            📞 Call
+          </a>
+
+          <a
+            href="https://wa.me/91${escapeHTML(phone)}"
+            target="_blank"
+            class="whatsapp-btn"
+          >
+            💬 WhatsApp
+          </a>
+
+        </div>
+
+        <div>
+          <strong>Service:</strong>
+          ${escapeHTML(booking.service)}
+        </div>
+
+        <div>
+          <strong>Date:</strong>
+          ${escapeHTML(displayDate)}
+        </div>
+
+        <div>
+          <strong>Time:</strong>
+          ${escapeHTML(displayTime)}
+        </div>
+
+      </div>
+
+
+      <div class="status">
+        Status:
+        ${escapeHTML(status)}
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          onclick="updateStatus(${Number(booking.row)}, 'Confirmed')"
+        >
+          ✅ Confirm
+        </button>
+
+        <button
+          onclick="updateStatus(${Number(booking.row)}, 'Completed')"
+        >
+          ✔️ Completed
+        </button>
+
+        <button
+          onclick="updateStatus(${Number(booking.row)}, 'Cancelled')"
+        >
+          ❌ Cancel
+        </button>
+
+        <button
+          onclick="updateStatus(${Number(booking.row)}, 'New')"
+        >
+          🔄 New
+        </button>
+
+      </div>
+
+    `;
+
+
+    bookingsBox.appendChild(div);
+
+  });
 
 }
 
@@ -525,19 +796,36 @@ async function updateStatus(row, status) {
       });
 
 
-    /*
-      Apps Script doPost currently saves
-      normal bookings.
+    const result =
+      await response.json();
 
-      So we use a special status update
-      request through the same endpoint.
-    */
 
-    await response.text();
+    if (!result.success) {
 
-    alert("Status update request sent.");
+      throw new Error(
+        result.error || "Status update failed"
+      );
 
-    loadBookings();
+    }
+
+
+    /* Update local data immediately */
+
+    const booking =
+      allBookings.find(
+        b => Number(b.row) === Number(row)
+      );
+
+
+    if (booking) {
+      booking.status = status;
+    }
+
+
+    updateStats();
+
+    filterBookings();
+
 
   } catch (error) {
 
@@ -547,6 +835,445 @@ async function updateStatus(row, status) {
     );
 
   }
+
+}
+
+
+/* =========================
+   EXPORT BOOKINGS
+========================= */
+
+function exportBookings() {
+
+  if (allBookings.length === 0) {
+
+    alert("Export karne ke liye koi booking nahi hai.");
+
+    return;
+
+  }
+
+
+  const headers = [
+    "Name",
+    "Phone",
+    "Service",
+    "Date",
+    "Time",
+    "Status"
+  ];
+
+
+  const rows =
+    allBookings.map(function(booking) {
+
+      return [
+
+        booking.name || "",
+
+        booking.phone || "",
+
+        booking.service || "",
+
+        formatDate(booking.date),
+
+        formatTime(booking.time),
+
+        booking.status || "New"
+
+      ];
+
+    });
+
+
+  const csv = [
+
+    headers,
+
+    ...rows
+
+  ].map(function(row) {
+
+    return row.map(function(value) {
+
+      return `"${String(value)
+        .replace(/"/g, '""')}"`;
+
+    }).join(",");
+
+  }).join("\n");
+
+
+  const blob =
+    new Blob(
+      ["\ufeff" + csv],
+      { type: "text/csv;charset=utf-8;" }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href = url;
+
+  link.download =
+    "Dreamzz-Spa-Bookings.csv";
+
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================
+   DATE FORMAT
+========================= */
+
+function formatDate(dateValue) {
+
+  if (!dateValue) return "";
+
+
+  const date =
+    parseDateValue(dateValue);
+
+
+  if (!date) {
+
+    return String(dateValue);
+
+  }
+
+
+  const day =
+    String(date.getDate())
+      .padStart(2, "0");
+
+  const month =
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
+
+  const year =
+    String(date.getFullYear())
+      .slice(-2);
+
+
+  return `${day}-${month}-${year}`;
+
+}
+
+
+/* =========================
+   TIME FORMAT
+========================= */
+
+function formatTime(timeValue) {
+
+  if (!timeValue) return "";
+
+
+  const value =
+    String(timeValue).trim();
+
+
+  /* Already normal text like 6:30 AM */
+
+  if (
+    /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i
+      .test(value)
+  ) {
+
+    return value
+      .replace(/\s+/g, " ")
+      .toUpperCase();
+
+  }
+
+
+  /* Google Sheet time/date */
+
+  const date =
+    parseTimeValue(value);
+
+
+  if (!date) {
+
+    return value;
+
+  }
+
+
+  return date.toLocaleTimeString(
+    "en-US",
+    {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    }
+  );
+
+}
+
+
+/* =========================
+   DATE FOR FILTER
+========================= */
+
+function getDateForFilter(value) {
+
+  if (!value) return "";
+
+
+  const str =
+    String(value).trim();
+
+
+  /* ISO date from Apps Script */
+
+  const isoMatch =
+    str.match(
+      /^(\d{4})-(\d{2})-(\d{2})/
+    );
+
+
+  if (isoMatch) {
+
+    return (
+      isoMatch[1] +
+      "-" +
+      isoMatch[2] +
+      "-" +
+      isoMatch[3]
+    );
+
+  }
+
+
+  const date =
+    parseDateValue(str);
+
+
+  if (!date) return "";
+
+
+  return (
+    date.getFullYear() +
+    "-" +
+    String(date.getMonth() + 1)
+      .padStart(2, "0") +
+    "-" +
+    String(date.getDate())
+      .padStart(2, "0")
+  );
+
+}
+
+
+/* =========================
+   PARSE DATE
+========================= */
+
+function parseDateValue(value) {
+
+  if (!value) return null;
+
+
+  const str =
+    String(value).trim();
+
+
+  /* YYYY-MM-DD */
+
+  let match =
+    str.match(
+      /^(\d{4})-(\d{2})-(\d{2})/
+    );
+
+
+  if (match) {
+
+    return new Date(
+      Number(match[1]),
+      Number(match[2]) - 1,
+      Number(match[3])
+    );
+
+  }
+
+
+  /* MM/DD/YYYY */
+
+  match =
+    str.match(
+      /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+    );
+
+
+  if (match) {
+
+    return new Date(
+      Number(match[3]),
+      Number(match[1]) - 1,
+      Number(match[2])
+    );
+
+  }
+
+
+  const date =
+    new Date(str);
+
+
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+
+
+  return date;
+
+}
+
+
+/* =========================
+   PARSE TIME
+========================= */
+
+function parseTimeValue(value) {
+
+  if (!value) return null;
+
+
+  const str =
+    String(value).trim();
+
+
+  /* Time only: 11:38:50 */
+
+  let match =
+    str.match(
+      /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
+    );
+
+
+  if (match) {
+
+    const date =
+      new Date(2000, 0, 1);
+
+    date.setHours(
+      Number(match[1]),
+      Number(match[2]),
+      Number(match[3] || 0),
+      0
+    );
+
+    return date;
+
+  }
+
+
+  /* Time with AM/PM */
+
+  match =
+    str.match(
+      /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i
+    );
+
+
+  if (match) {
+
+    let hour =
+      Number(match[1]);
+
+    const minute =
+      Number(match[2]);
+
+    const ampm =
+      match[3].toUpperCase();
+
+
+    if (ampm === "PM" && hour !== 12) {
+      hour += 12;
+    }
+
+    if (ampm === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+
+    const date =
+      new Date(2000, 0, 1);
+
+    date.setHours(
+      hour,
+      minute,
+      0,
+      0
+    );
+
+    return date;
+
+  }
+
+
+  /* Full ISO date */
+
+  const date =
+    new Date(str);
+
+
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+
+
+  /*
+    Ignore 1899 date from Google Sheet
+    and use only its time.
+  */
+
+  if (date.getFullYear() === 1899) {
+
+    const fixed =
+      new Date(2000, 0, 1);
+
+    fixed.setHours(
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      0
+    );
+
+    return fixed;
+
+  }
+
+
+  return date;
+
+}
+
+
+/* =========================
+   STATUS NORMALIZE
+========================= */
+
+function normalizeStatus(status) {
+
+  return String(status || "New")
+    .toLowerCase()
+    .trim();
 
 }
 
@@ -566,41 +1293,6 @@ function escapeHTML(text) {
   return div.innerHTML;
 
 }
-
-function filterBookings() {
-  const search = document
-    .getElementById("searchBooking")
-    .value
-    .toLowerCase()
-    .trim();
-
-  const status = document
-    .getElementById("statusFilter")
-    .value
-    .toLowerCase();
-
-  const filtered = allBookings.filter(booking => {
-    const matchesSearch =
-      !search ||
-      booking.name.toLowerCase().includes(search) ||
-      booking.phone.toLowerCase().includes(search);
-
-    const matchesStatus =
-      !status ||
-      booking.status.toLowerCase() === status;
-
-    const selectedDate = document.getElementById("dateFilter").value;
-
-const matchesDate =
-  !selectedDate ||
-  booking.date === selectedDate;
-
-return matchesSearch && matchesStatus && matchesDate;
-  });
-
-  displayBookings(filtered);
-}
-
 
 </script>
 
