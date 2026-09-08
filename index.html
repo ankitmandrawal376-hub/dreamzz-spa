@@ -660,8 +660,8 @@ if (!data.success) {
       // ==================================================
 
       const rawReply =
-        data.candidates?.[0]?.content?.parts?.[0]?.text
-        || "Sorry, mujhe response nahi mila.";
+  data.reply ||
+  "Sorry, mujhe response nahi mila.";
 
 
       // ==================================================
