@@ -194,7 +194,6 @@
   // ==================================================
 
   // Yahan apni NEW working Gemini API key paste karo.
-  const API_KEY = "AQ.Ab8RN6Jp8KNa3xGeVeaXF43HIiX2XyRh_BmcOxmVaknPpWWSQw";
 
 
   // ==================================================
@@ -629,65 +628,31 @@ ${message}
 
 
       // ==================================================
-      // GEMINI API REQUEST
-      // ==================================================
+// GEMINI BACKEND REQUEST
+// ==================================================
 
-      const response = await fetch(
+const response = await fetch(BOOKING_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "text/plain;charset=utf-8"
+  },
+  body: JSON.stringify({
+    action: "gemini",
+    message: message,
+    history: conversationHistory.map(item => ({
+      role: item.role,
+      text: item.parts?.[0]?.text || ""
+    }))
+  })
+});
 
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
+const data = await response.json();
 
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "x-goog-api-key":
-              API_KEY
-
-          },
-
-          body: JSON.stringify({
-
-            systemInstruction: {
-
-              parts: [
-                {
-                  text: systemPrompt
-                }
-              ]
-
-            },
-
-            contents:
-              conversationHistory
-
-          })
-
-        }
-
-      );
-
-
-      // ==================================================
-      // READ RESPONSE
-      // ==================================================
-
-      const data =
-        await response.json();
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.error?.message ||
-          "Gemini API request failed"
-        );
-
-      }
+if (!data.success) {
+  throw new Error(
+    data.error || "Gemini API request failed"
+  );
+}
 
 
       // ==================================================
