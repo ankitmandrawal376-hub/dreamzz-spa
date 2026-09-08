@@ -4,1126 +4,291 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dreamzz Spa - AI Receptionist</title>
+  <title>Dreamzz Spa Admin</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    body {
       font-family: Arial, sans-serif;
-      background: #eee5da;
+      background: #f5efe6;
       color: #3d3028;
     }
 
-    .app {
+    .container {
       width: 100%;
-      max-width: 520px;
-      height: 100vh;
-      height: 100dvh;
+      max-width: 900px;
       margin: auto;
-      background: #fffdf9;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 0 35px rgba(61, 48, 40, 0.12);
+      padding: 28px 20px;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
-    .header {
-      padding: 18px 20px;
-      background: #3d3028;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-shrink: 0;
+    .page-title {
+      margin-bottom: 20px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      background: #b58b52;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .header h2 {
+    .page-title h1 {
       margin: 0;
-      font-size: 20px;
-      letter-spacing: 0.3px;
-    }
-
-    .header p {
-      margin: 4px 0 0;
-      color: #e5d8ca;
-      font-size: 12px;
-    }
-
-    .online {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #eadfce;
-      white-space: nowrap;
-    }
-
-    .online-dot {
-      width: 7px;
-      height: 7px;
-      background: #62c174;
-      border-radius: 50%;
-    }
-
-    /* =========================
-       CHAT
-    ========================= */
-
-    #chat {
-      flex: 1;
-      padding: 20px 16px;
-      overflow-y: auto;
-      background:
-        radial-gradient(
-          circle at top,
-          #fffdf9 0%,
-          #f8f1e8 100%
-        );
-      scroll-behavior: smooth;
-    }
-
-    #chat::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    #chat::-webkit-scrollbar-thumb {
-      background: #d5c5b4;
-      border-radius: 10px;
-    }
-
-    .welcome {
-      text-align: center;
-      padding: 10px 15px 18px;
-    }
-
-    .welcome-icon {
-      width: 58px;
-      height: 58px;
-      margin: 0 auto 10px;
-      border-radius: 50%;
-      background: #eadcc9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 27px;
-    }
-
-    .welcome h3 {
-      margin: 0;
-      font-size: 17px;
+      font-family: Georgia, serif;
+      font-size: 30px;
       color: #3d3028;
     }
 
-    .welcome p {
-      margin: 5px auto 0;
-      max-width: 300px;
-      color: #7d6d60;
-      font-size: 12px;
-      line-height: 1.5;
+    .page-title p {
+      margin: 5px 0 0;
+      color: #8a7564;
+      font-size: 14px;
     }
 
-    .quick-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 13px;
-    }
-
-    .quick-btn {
-      border: 1px solid #dbcbb9;
-      background: rgba(255, 253, 249, 0.9);
-      color: #5b4636;
-      border-radius: 20px;
-      padding: 8px 12px;
-      font-size: 11px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .quick-btn:hover {
-      background: #eadcc9;
-    }
-
-    /* =========================
-       MESSAGES
-    ========================= */
-
-    .message {
-      padding: 11px 14px;
-      margin: 9px 0;
+    .card {
+      background: #fffdf9;
+      border: 1px solid #eadfd2;
       border-radius: 16px;
-      max-width: 84%;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 14px;
-      box-shadow: 0 2px 7px rgba(61, 48, 40, 0.06);
+      padding: 22px;
+      box-shadow: 0 8px 25px rgba(61, 48, 40, 0.08);
     }
 
-    .bot {
-      background: #eee4d8;
+    .card h2 {
+      margin-top: 0;
       color: #3d3028;
-      border-bottom-left-radius: 5px;
+      font-family: Georgia, serif;
     }
 
-    .user {
-      background: #5b4636;
-      color: white;
-      margin-left: auto;
-      border-bottom-right-radius: 5px;
-    }
-
-    .thinking {
-      color: #806f61;
-      font-style: italic;
-    }
-
-    /* =========================
-       BOTTOM AREA
-    ========================= */
-
-    .bottom-area {
-      flex-shrink: 0;
-      background: #fffdf9;
-      border-top: 1px solid #e8ddd2;
-      padding: 9px 10px 10px;
-    }
-
-    .contact-row {
-      display: flex;
-      gap: 7px;
-      margin-bottom: 8px;
-    }
-
-    .contact-btn {
-      flex: 1;
-      min-height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d9c9b8;
       border-radius: 9px;
-      font-size: 11px;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-
-    .whatsapp {
-      background: #25d366;
-      color: white;
-    }
-
-    .call {
-      background: #eadcc9;
-      color: #5b4636;
-    }
-
-    .contact-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .input-area {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    #messageInput {
-      flex: 1;
-      min-width: 0;
-      height: 43px;
-      padding: 0 14px;
-      border: 1px solid #d9cbbd;
-      border-radius: 22px;
-      outline: none;
-      background: #faf6f0;
+      background: #fffdf9;
       color: #3d3028;
       font-size: 14px;
+      outline: none;
     }
 
-    #messageInput::placeholder {
-      color: #9b8d80;
-    }
-
-    #messageInput:focus {
+    input:focus {
       border-color: #b58b52;
-      background: white;
     }
 
-    #sendButton {
-      width: 43px;
-      height: 43px;
-      padding: 0;
+    button {
       border: none;
-      border-radius: 50%;
+      border-radius: 9px;
+      padding: 11px 18px;
       background: #5b4636;
       color: white;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 17px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: 0.2s;
+      font-weight: 600;
     }
 
-    #sendButton:hover {
-      background: #3d3028;
+    button:hover {
+      background: #49372b;
     }
 
-    #sendButton:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
+    .login-button {
+      margin-top: 10px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 520px) {
-      body {
-        background: #fffdf9;
-      }
-
-      .app {
-        max-width: none;
-        box-shadow: none;
-      }
-
-      .header {
-        padding: 16px;
-      }
-
-      #chat {
-        padding: 16px 12px;
-      }
-
-      .message {
-        max-width: 88%;
-      }
+    .gold-button {
+      background: #b58b52;
     }
+
+    .gold-button:hover {
+      background: #9d753f;
+    }
+
+    .login-box {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 20px 12px;
+      }
+
+      .page-title h1 {
+        font-size: 26px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
 
-<div class="app">
+  <div class="container">
 
-  <!-- HEADER -->
-  <div class="header">
-
-    <div class="brand">
-
-      <div class="logo">
-        🌿
-      </div>
-
-      <div>
-        <h2>Dreamzz Spa</h2>
-        <p>AI Receptionist • Kajal</p>
-      </div>
-
-    </div>
-
-    <div class="online">
-      <span class="online-dot"></span>
-      Online
-    </div>
-
-  </div>
-
-
-  <!-- CHAT -->
-  <div id="chat">
-
-    <div class="welcome">
-
-      <div class="welcome-icon">
-        ✨
-      </div>
-
-      <h3>Welcome to Dreamzz Spa</h3>
-
-      <p>
-        Services, prices aur appointment booking ke liye mujhse poochiye.
-      </p>
-
-      <div class="quick-actions">
-
-        <button
-          class="quick-btn"
-          onclick="quickMessage('Mujhe services aur prices batao')"
-        >
-          💆 Services
-        </button>
-
-        <button
-          class="quick-btn"
-          onclick="quickMessage('Mujhe appointment book karni hai')"
-        >
-          📅 Book Appointment
-        </button>
-
-        <button
-          class="quick-btn"
-          onclick="quickMessage('First massage offer kya hai?')"
-        >
-          🎁 First Massage Offer
-        </button>
-
-      </div>
-
+    <div class="page-title">
+      <h1>Dreamzz Spa Admin</h1>
+      <p>Booking Management</p>
     </div>
 
 
-    <div class="message bot">
-      Hi 👋 Welcome to Dreamzz Spa.
+    <!-- LOGIN -->
 
-      Main aapko services, prices aur appointment ke baare mein help kar sakta hoon.
-    </div>
+    <div id="loginSection" class="card login-box">
 
-  </div>
-
-
-  <!-- BOTTOM -->
-  <div class="bottom-area">
-
-    <div class="contact-row">
-
-      <a
-        href="https://wa.me/917011030144?text=Hello%20Dreamzz%20Spa%2C%20mujhe%20booking%20karni%20hai."
-        target="_blank"
-        class="contact-btn whatsapp"
-      >
-        💬 WhatsApp Booking
-      </a>
-
-      <a
-        href="tel:+917011030144"
-        class="contact-btn call"
-      >
-        📞 Call Now
-      </a>
-
-    </div>
-
-
-    <div class="input-area">
+      <h2>Admin Login</h2>
 
       <input
-        id="messageInput"
-        type="text"
-        placeholder="Type your message..."
+        id="password"
+        type="password"
+        placeholder="Enter admin password"
         autocomplete="off"
       >
 
       <button
-        id="sendButton"
-        onclick="sendMessage()"
-        title="Send"
+        class="login-button"
+        onclick="login()"
       >
-        ➤
+        Login
+      </button>
+
+    </div>
+
+
+    <!-- ADMIN -->
+
+    <div
+      id="adminSection"
+      class="card hidden"
+    >
+
+      <h2>Bookings</h2>
+
+      <p>
+        Admin panel is ready.
+      </p>
+
+      <button onclick="loadBookings()">
+        🔄 Refresh
+      </button>
+
+      <button
+        class="gold-button"
+        onclick="exportBookings()"
+      >
+        ⬇ Export
       </button>
 
     </div>
 
   </div>
 
-</div>
-
 
 <script>
 
-  // ==================================================
-  // GOOGLE SHEET BOOKING URL
-  // ==================================================
-
-  const BOOKING_URL =
-    "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
+const BOOKING_URL =
+"https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
 
 
-  // ==================================================
-  // CONVERSATION HISTORY
-  // ==================================================
+function login(){
 
-  let conversationHistory = [];
+  const password =
+    document.getElementById("password").value.trim();
 
+  if(!password){
 
-  // ==================================================
-  // BOOKING SAVED CHECK
-  // ==================================================
+    alert("Please enter admin password.");
 
-  let bookingSaved = false;
-
-
-  // ==================================================
-  // QUICK MESSAGE
-  // ==================================================
-
-  function quickMessage(text) {
-
-    const input =
-      document.getElementById("messageInput");
-
-    input.value = text;
-
-    sendMessage();
+    return;
 
   }
 
 
-  // ==================================================
-  // SEND BOOKING TO GOOGLE SHEET
-  // ==================================================
+  fetch(
+    BOOKING_URL,
+    {
+      method:"POST",
 
-  async function saveBookingToSheet(booking) {
+      headers:{
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
 
-    try {
+      body:JSON.stringify({
 
-      await fetch(BOOKING_URL, {
-        method: "POST",
+        action:"adminLogin",
 
-        mode: "no-cors",
+        password:password
 
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
+      })
 
-        body: JSON.stringify({
-          name: booking.name,
-          phone: booking.phone,
-          service: booking.service,
-          date: booking.date,
-          time: booking.time,
-          status: "New"
-        })
-      });
-
-      bookingSaved = true;
-
-      return true;
-
-    } catch (error) {
-
-      console.error("Booking save error:", error);
-
-      return false;
     }
-  }
+  )
+  .then(response => response.json())
 
+  .then(data => {
 
-  // ==================================================
-  // EXTRACT BOOKING FROM AI RESPONSE
-  // ==================================================
+    if(data.success){
 
-  function extractBooking(reply) {
+      document
+        .getElementById("loginSection")
+        .classList.add("hidden");
 
-    const start =
-      reply.indexOf("BOOKING_DATA_START");
+      document
+        .getElementById("adminSection")
+        .classList.remove("hidden");
 
-    const end =
-      reply.indexOf("BOOKING_DATA_END");
+    }else{
 
-    if (start === -1 || end === -1) {
-
-      return {
-        cleanReply: reply,
-        booking: null
-      };
+      alert("Wrong password.");
 
     }
 
+  })
+  .catch(error => {
 
-    try {
+    console.error(error);
 
-      const jsonText =
-        reply
-          .substring(
-            start + "BOOKING_DATA_START".length,
-            end
-          )
-          .trim();
+    alert("Login connection error.");
 
+  });
 
-      const booking =
-        JSON.parse(jsonText);
-
-
-      const cleanReply =
-        reply
-          .replace(
-            /BOOKING_DATA_START[\s\S]*?BOOKING_DATA_END/,
-            ""
-          )
-          .trim();
-
-
-      return {
-        cleanReply: cleanReply,
-        booking: booking
-      };
-
-    } catch (error) {
-
-      console.error(
-        "Booking JSON error:",
-        error
-      );
-
-      return {
-        cleanReply: reply,
-        booking: null
-      };
-
-    }
-
-  }
-
-
-  // ==================================================
-  // SEND MESSAGE
-  // ==================================================
-
-  async function sendMessage() {
-
-    const input =
-      document.getElementById("messageInput");
-
-    const chat =
-      document.getElementById("chat");
-
-    const button =
-      document.getElementById("sendButton");
-
-
-    const message =
-      input.value.trim();
-
-
-    if (!message) {
-      return;
-    }
-
-
-    // ==================================================
-    // SHOW USER MESSAGE
-    // ==================================================
-
-    const userMessage =
-      document.createElement("div");
-
-    userMessage.className =
-      "message user";
-
-    userMessage.textContent =
-      message;
-
-    chat.appendChild(userMessage);
-
-
-    input.value = "";
-
-    button.disabled = true;
-
-    button.textContent = "…";
-
-
-    // ==================================================
-    // AI LOADING
-    // ==================================================
-
-    const botMessage =
-      document.createElement("div");
-
-    botMessage.className =
-      "message bot thinking";
-
-    botMessage.textContent =
-      "Thinking...";
-
-    chat.appendChild(botMessage);
-
-
-    chat.scrollTop =
-      chat.scrollHeight;
-
-
-    // ==================================================
-    // AI SYSTEM PROMPT
-    // ==================================================
-
-    const systemPrompt = `
-
-You are the official AI receptionist for Dreamzz Spa.
-
-Your job is to help customers with:
-
-- Spa services
-- Prices
-- Massage durations
-- Business information
-- First massage offer
-- Appointment booking
-
-
-========================
-BUSINESS INFORMATION
-========================
-
-Business Name:
-Dreamzz Spa
-
-Experience:
-15 Years
-
-Award:
-Award Winning
-
-Address:
-Shop No. 47, Chowk, Kanhaiya Vihar, Kargi,
-Dehradun, Uttarakhand 248001
-
-Phone:
-7011030144
-
-
-========================
-SERVICES
-========================
-
-1. COUPLE BODY MASSAGE
-
-45 minutes - ₹1200
-60 minutes - ₹1500
-90 minutes - ₹1800
-
-
-2. FULL BODY MASSAGE
-
-45 minutes
-60 minutes
-90 minutes
-
-Price:
-Not provided.
-
-
-3. KERALA MASSAGE
-
-45 minutes - ₹1200
-60 minutes - ₹1500
-90 minutes - ₹1800
-
-
-4. SPORTS MASSAGE
-
-45 minutes - ₹1200
-60 minutes - ₹1500
-90 minutes - ₹1800
-
-
-5. DEEP TISSUE MASSAGE
-
-45 minutes
-60 minutes
-90 minutes
-
-Price:
-Not provided.
-
-
-6. AROMATHERAPY MASSAGE
-
-45 minutes - ₹1200
-60 minutes - ₹1500
-90 minutes - ₹1800
-
-
-========================
-DEMO OFFER
-========================
-
-50% OFF on the customer's first massage.
-
-This offer is active for this demo.
-
-
-========================
-APPOINTMENT BOOKING
-========================
-
-If the customer wants an appointment, collect these five things:
-
-1. Customer name
-2. Phone number
-3. Massage/service
-4. Preferred date
-5. Preferred time
-
-
-IMPORTANT:
-
-Do not ask all questions again if the customer has already provided
-some information.
-
-Remember information from earlier messages.
-
-Ask only for the missing information.
-
-
-When all five booking details are available:
-
-- Confirm the details with the customer.
-- Tell them that their booking request has been recorded.
-- Do NOT claim that the appointment is finally confirmed.
-- Say that final confirmation depends on availability.
-
-
-========================
-BOOKING DATA
-========================
-
-ONLY when ALL five details are available, append this exact block
-at the VERY END of your response:
-
-BOOKING_DATA_START
-
-{
-  "name": "CUSTOMER NAME",
-  "phone": "CUSTOMER PHONE",
-  "service": "SERVICE NAME",
-  "date": "PREFERRED DATE",
-  "time": "PREFERRED TIME"
 }
 
-BOOKING_DATA_END
 
+function loadBookings(){
 
-If even ONE detail is missing:
+  console.log("Refresh clicked.");
 
-DO NOT generate BOOKING_DATA_START or BOOKING_DATA_END.
+}
 
 
-========================
-IMPORTANT RULES
-========================
+function exportBookings(){
 
-1. Be friendly, professional and helpful.
+  console.log("Export clicked.");
 
-2. Keep responses short and easy to understand.
+}
 
-3. Reply in the same language as the customer.
 
-4. Hindi, Hinglish and English are supported.
+document
+  .getElementById("password")
+  .addEventListener(
+    "keydown",
+    function(event){
 
-5. Never invent prices.
+      if(event.key === "Enter"){
 
-6. Full Body Massage price is NOT provided.
-
-7. Deep Tissue Massage price is NOT provided.
-
-8. If someone asks for Full Body Massage price, say:
-
-"Is service ka current price available nahi hai.
-Aap 7011030144 par contact karke current price confirm kar sakte hain."
-
-
-9. If someone asks for Deep Tissue Massage price, say:
-
-"Is service ka current price available nahi hai.
-Aap 7011030144 par contact karke current price confirm kar sakte hain."
-
-
-10. Do not invent opening hours.
-
-11. If asked about opening hours, say:
-
-"Opening hours ki information abhi available nahi hai.
-Aap 7011030144 par contact karke confirm kar sakte hain."
-
-
-12. The business location is Dehradun.
-
-13. Do not claim that the business is located in Bangalore or Gurgaon.
-
-14. If asked for the address, provide the complete Dehradun address.
-
-15. If asked for the phone number, provide:
-
-7011030144
-
-
-16. The 50% first-massage offer is active for this demo.
-
-17. Do not provide sexual or explicit services or content.
-
-18. Keep the conversation professional.
-
-19. Do not make medical diagnoses.
-
-20. Do not guarantee medical results.
-
-21. If you don't know something, clearly say that the information
-is not available instead of making something up.
-
-22. If the customer simply says Hi, Hello or Hii,
-respond naturally and ask how you can help.
-
-23. Never say that a booking is confirmed before availability is checked.
-
-
-========================
-CUSTOMER MESSAGE
-========================
-
-${message}
-
-`;
-
-
-    try {
-
-      // ==================================================
-      // ADD USER MESSAGE TO HISTORY
-      // ==================================================
-
-      conversationHistory.push({
-
-        role: "user",
-
-        parts: [
-          {
-            text: message
-          }
-        ]
-
-      });
-
-
-      // ==================================================
-      // GEMINI BACKEND REQUEST
-      // ==================================================
-
-      const response =
-        await fetch(BOOKING_URL, {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-
-          body: JSON.stringify({
-
-            action: "gemini",
-
-            message: message,
-
-            history:
-              conversationHistory.map(
-                item => ({
-
-                  role: item.role,
-
-                  text:
-                    item.parts?.[0]?.text || ""
-
-                })
-              )
-
-          })
-
-        });
-
-
-      const data =
-        await response.json();
-
-
-      if (!data.success) {
-
-        throw new Error(
-          data.error ||
-          "Gemini API request failed"
-        );
+        login();
 
       }
-
-
-      // ==================================================
-      // GET AI RESPONSE
-      // ==================================================
-
-      const rawReply =
-        data.reply ||
-        "Sorry, mujhe response nahi mila.";
-
-
-      // ==================================================
-      // CHECK BOOKING DATA
-      // ==================================================
-
-      const result =
-        extractBooking(rawReply);
-
-
-      let reply =
-        result.cleanReply;
-
-
-      // ==================================================
-      // SHOW AI REPLY
-      // ==================================================
-
-      botMessage.classList.remove(
-        "thinking"
-      );
-
-      botMessage.textContent =
-        reply;
-
-
-      // ==================================================
-      // ADD AI RESPONSE TO HISTORY
-      // ==================================================
-
-      conversationHistory.push({
-
-        role: "model",
-
-        parts: [
-          {
-            text: rawReply
-          }
-        ]
-
-      });
-
-
-      // ==================================================
-      // SAVE BOOKING
-      // ==================================================
-
-      if (
-        result.booking &&
-        !bookingSaved
-      ) {
-
-        const saved =
-          await saveBookingToSheet(
-            result.booking
-          );
-
-
-        if (saved) {
-
-          botMessage.textContent =
-            reply +
-            "\n\n✅ Thank you! Aapki booking request receive ho gayi hai. Hum jald hi aapse contact karenge. 😊";
-
-        }
-
-      }
-
-
-    } catch (error) {
-
-      console.error(
-        "AI Error:",
-        error
-      );
-
-
-      botMessage.classList.remove(
-        "thinking"
-      );
-
-      botMessage.textContent =
-        "❌ AI se connection nahi ho paya.\n\n" +
-        error.message;
-
-
-      // Failed request ko history se remove karo
-      conversationHistory.pop();
 
     }
-
-
-    // ==================================================
-    // ENABLE BUTTON
-    // ==================================================
-
-    button.disabled = false;
-
-    button.textContent =
-      "➤";
-
-
-    chat.scrollTop =
-      chat.scrollHeight;
-
-
-    input.focus();
-
-  }
-
-
-  // ==================================================
-  // ENTER KEY
-  // ==================================================
-
-  document
-    .getElementById("messageInput")
-    .addEventListener(
-      "keydown",
-      function(event) {
-
-        if (event.key === "Enter") {
-
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
-    );
+  );
 
 </script>
 
