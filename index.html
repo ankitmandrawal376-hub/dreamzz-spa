@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dreamzz Spa Admin</title>
+  <title>Dreamzz Spa - AI Receptionist</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -15,280 +14,779 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5efe6;
-      color: #3d3028;
+      background: #f5f5f5;
     }
 
-    .container {
+    .app {
       width: 100%;
-      max-width: 900px;
+      max-width: 500px;
+      height: 100vh;
       margin: auto;
-      padding: 28px 20px;
+      background: white;
+      display: flex;
+      flex-direction: column;
     }
 
-    .page-title {
-      margin-bottom: 20px;
+    .header {
+      padding: 18px;
+      background: #111;
+      color: white;
     }
 
-    .page-title h1 {
+    .header h2 {
       margin: 0;
-      font-family: Georgia, serif;
-      font-size: 30px;
-      color: #3d3028;
+      font-size: 22px;
     }
 
-    .page-title p {
+    .header p {
       margin: 5px 0 0;
-      color: #8a7564;
+      color: #bbb;
       font-size: 14px;
     }
 
-    .card {
-      background: #fffdf9;
-      border: 1px solid #eadfd2;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 8px 25px rgba(61, 48, 40, 0.08);
+    #chat {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
     }
 
-    .card h2 {
-      margin-top: 0;
-      color: #3d3028;
-      font-family: Georgia, serif;
+    .message {
+      padding: 10px 14px;
+      margin: 8px 0;
+      border-radius: 12px;
+      max-width: 82%;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .bot {
+      background: #eee;
+      color: #111;
+    }
+
+    .user {
+      background: #111;
+      color: white;
+      margin-left: auto;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      gap: 8px;
+      background: white;
     }
 
     input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d9c9b8;
-      border-radius: 9px;
-      background: #fffdf9;
-      color: #3d3028;
-      font-size: 14px;
+      flex: 1;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       outline: none;
+      font-size: 15px;
     }
 
     input:focus {
-      border-color: #b58b52;
+      border-color: #111;
     }
 
     button {
+      padding: 12px 18px;
       border: none;
-      border-radius: 9px;
-      padding: 11px 18px;
-      background: #5b4636;
+      border-radius: 8px;
+      background: #111;
       color: white;
-      font-size: 14px;
       cursor: pointer;
-      font-weight: 600;
+      font-size: 14px;
     }
 
-    button:hover {
-      background: #49372b;
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
-
-    .login-button {
-      margin-top: 10px;
-    }
-
-    .gold-button {
-      background: #b58b52;
-    }
-
-    .gold-button:hover {
-      background: #9d753f;
-    }
-
-    .login-box {
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media (max-width: 600px) {
-
-      .container {
-        padding: 20px 12px;
-      }
-
-      .page-title h1 {
-        font-size: 26px;
-      }
-
-      .card {
-        padding: 18px;
-      }
-
-    }
-
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="app">
 
-    <div class="page-title">
-      <h1>Dreamzz Spa Admin</h1>
-      <p>Booking Management</p>
-    </div>
+  <div class="header">
+    <h2>Dreamzz Spa</h2>
+    <p>Online • Kajal</p>
+  </div>
 
+  <div id="chat">
 
-    <!-- LOGIN -->
+    <div class="message bot">
+      Hi 👋 Welcome to Dreamzz Spa.
 
-    <div id="loginSection" class="card login-box">
-
-      <h2>Admin Login</h2>
-
-      <input
-        id="password"
-        type="password"
-        placeholder="Enter admin password"
-        autocomplete="off"
-      >
-
-      <button
-        class="login-button"
-        onclick="login()"
-      >
-        Login
-      </button>
-
-    </div>
-
-
-    <!-- ADMIN -->
-
-    <div
-      id="adminSection"
-      class="card hidden"
-    >
-
-      <h2>Bookings</h2>
-
-      <p>
-        Admin panel is ready.
-      </p>
-
-      <button onclick="loadBookings()">
-        🔄 Refresh
-      </button>
-
-      <button
-        class="gold-button"
-        onclick="exportBookings()"
-      >
-        ⬇ Export
-      </button>
-
+      Main aapko services, prices aur appointment ke baare mein help kar sakta hoon.
     </div>
 
   </div>
 
+  <div class="input-area">
+
+    <input
+      id="messageInput"
+      type="text"
+      placeholder="Type your message..."
+      autocomplete="off"
+    >
+    </button>
+
+    <button id="sendButton" onclick="sendMessage()">
+  Send
+</button>
+
+<a
+  href="https://wa.me/917011030144?text=Hello%20Dreamzz%20Spa%2C%20mujhe%20booking%20karni%20hai."
+  target="_blank"
+  style="
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;
+    height:42px;
+    margin-top:8px;
+    margin-left:6px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    border-radius:50%;
+    font-size:22px;
+  "
+  title="WhatsApp Booking"
+>
+  💬
+</a>
+
+<a
+  href="tel:+917011030144"
+  style="
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 6px;
+    padding: 8px 14px;
+    background: #111;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  "
+>
+  📞 Call Now
+</a>
+
+  </div>
+
+</div>
 
 <script>
 
-const BOOKING_URL =
-"https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
+  // ==================================================
+  // GEMINI API KEY
+  // ==================================================
+
+  // Yahan apni NEW working Gemini API key paste karo.
 
 
-function login(){
+  // ==================================================
+  // GOOGLE SHEET BOOKING URL
+  // ==================================================
 
-  const password =
-    document.getElementById("password").value.trim();
+  const BOOKING_URL =
+    "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
 
-  if(!password){
 
-    alert("Please enter admin password.");
+  // ==================================================
+  // CONVERSATION HISTORY
+  // ==================================================
 
-    return;
+  let conversationHistory = [];
+
+
+  // ==================================================
+  // BOOKING SAVED CHECK
+  // ==================================================
+
+  let bookingSaved = false;
+
+
+  // ==================================================
+  // SEND BOOKING TO GOOGLE SHEET
+  // ==================================================
+
+  async function saveBookingToSheet(booking) {
+
+    try {
+
+      await fetch(BOOKING_URL, {
+        method: "POST",
+
+        mode: "no-cors",
+
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+          name: booking.name,
+          phone: booking.phone,
+          service: booking.service,
+          date: booking.date,
+          time: booking.time,
+          status: "New"
+        })
+      });
+
+      bookingSaved = true;
+
+      return true;
+
+    } catch (error) {
+
+      console.error("Booking save error:", error);
+
+      return false;
+    }
+  }
+
+
+  // ==================================================
+  // EXTRACT BOOKING FROM AI RESPONSE
+  // ==================================================
+
+  function extractBooking(reply) {
+
+    const start = reply.indexOf("BOOKING_DATA_START");
+    const end = reply.indexOf("BOOKING_DATA_END");
+
+    if (start === -1 || end === -1) {
+      return {
+        cleanReply: reply,
+        booking: null
+      };
+    }
+
+    try {
+
+      const jsonText = reply
+        .substring(
+          start + "BOOKING_DATA_START".length,
+          end
+        )
+        .trim();
+
+      const booking = JSON.parse(jsonText);
+
+      const cleanReply = reply
+        .replace(
+          /BOOKING_DATA_START[\s\S]*?BOOKING_DATA_END/,
+          ""
+        )
+        .trim();
+
+      return {
+        cleanReply: cleanReply,
+        booking: booking
+      };
+
+    } catch (error) {
+
+      console.error("Booking JSON error:", error);
+
+      return {
+        cleanReply: reply,
+        booking: null
+      };
+    }
+  }
+
+
+  // ==================================================
+  // SEND MESSAGE
+  // ==================================================
+
+  async function sendMessage() {
+
+    const input =
+      document.getElementById("messageInput");
+
+    const chat =
+      document.getElementById("chat");
+
+    const button =
+      document.getElementById("sendButton");
+
+    const message =
+      input.value.trim();
+
+
+    if (!message) {
+      return;
+    }
+
+
+    // ==================================================
+    // SHOW USER MESSAGE
+    // ==================================================
+
+    const userMessage =
+      document.createElement("div");
+
+    userMessage.className =
+      "message user";
+
+    userMessage.textContent =
+      message;
+
+    chat.appendChild(userMessage);
+
+
+    input.value = "";
+
+    button.disabled = true;
+    button.textContent = "Thinking...";
+
+
+    // ==================================================
+    // AI LOADING
+    // ==================================================
+
+    const botMessage =
+      document.createElement("div");
+
+    botMessage.className =
+      "message bot";
+
+    botMessage.textContent =
+      "Thinking...";
+
+    chat.appendChild(botMessage);
+
+    chat.scrollTop =
+      chat.scrollHeight;
+
+
+    // ==================================================
+    // AI SYSTEM PROMPT
+    // ==================================================
+
+    const systemPrompt = `
+
+You are the official AI receptionist for Dreamzz Spa.
+
+Your job is to help customers with:
+
+- Spa services
+- Prices
+- Massage durations
+- Business information
+- First massage offer
+- Appointment booking
+
+
+========================
+BUSINESS INFORMATION
+========================
+
+Business Name:
+Dreamzz Spa
+
+Experience:
+15 Years
+
+Award:
+Award Winning
+
+Address:
+Shop No. 47, Chowk, Kanhaiya Vihar, Kargi,
+Dehradun, Uttarakhand 248001
+
+Phone:
+7011030144
+
+
+========================
+SERVICES
+========================
+
+1. COUPLE BODY MASSAGE
+
+45 minutes - ₹1200
+60 minutes - ₹1500
+90 minutes - ₹1800
+
+
+2. FULL BODY MASSAGE
+
+45 minutes
+60 minutes
+90 minutes
+
+Price:
+Not provided.
+
+
+3. KERALA MASSAGE
+
+45 minutes - ₹1200
+60 minutes - ₹1500
+90 minutes - ₹1800
+
+
+4. SPORTS MASSAGE
+
+45 minutes - ₹1200
+60 minutes - ₹1500
+90 minutes - ₹1800
+
+
+5. DEEP TISSUE MASSAGE
+
+45 minutes
+60 minutes
+90 minutes
+
+Price:
+Not provided.
+
+
+6. AROMATHERAPY MASSAGE
+
+45 minutes - ₹1200
+60 minutes - ₹1500
+90 minutes - ₹1800
+
+
+========================
+DEMO OFFER
+========================
+
+50% OFF on the customer's first massage.
+
+This offer is active for this demo.
+
+
+========================
+APPOINTMENT BOOKING
+========================
+
+If the customer wants an appointment, collect these five things:
+
+1. Customer name
+2. Phone number
+3. Massage/service
+4. Preferred date
+5. Preferred time
+
+
+IMPORTANT:
+
+Do not ask all questions again if the customer has already provided
+some information.
+
+Remember information from earlier messages.
+
+Ask only for the missing information.
+
+
+When all five booking details are available:
+
+- Confirm the details with the customer.
+- Tell them that their booking request has been recorded.
+- Do NOT claim that the appointment is finally confirmed.
+- Say that final confirmation depends on availability.
+
+
+========================
+BOOKING DATA
+========================
+
+ONLY when ALL five details are available, append this exact block
+at the VERY END of your response:
+
+BOOKING_DATA_START
+
+{
+  "name": "CUSTOMER NAME",
+  "phone": "CUSTOMER PHONE",
+  "service": "SERVICE NAME",
+  "date": "PREFERRED DATE",
+  "time": "PREFERRED TIME"
+}
+
+BOOKING_DATA_END
+
+
+If even ONE detail is missing:
+
+DO NOT generate BOOKING_DATA_START or BOOKING_DATA_END.
+
+
+========================
+IMPORTANT RULES
+========================
+
+1. Be friendly, professional and helpful.
+
+2. Keep responses short and easy to understand.
+
+3. Reply in the same language as the customer.
+
+4. Hindi, Hinglish and English are supported.
+
+5. Never invent prices.
+
+6. Full Body Massage price is NOT provided.
+
+7. Deep Tissue Massage price is NOT provided.
+
+8. If someone asks for Full Body Massage price, say:
+
+"Is service ka current price available nahi hai.
+Aap 7011030144 par contact karke current price confirm kar sakte hain."
+
+
+9. If someone asks for Deep Tissue Massage price, say:
+
+"Is service ka current price available nahi hai.
+Aap 7011030144 par contact karke current price confirm kar sakte hain."
+
+
+10. Do not invent opening hours.
+
+11. If asked about opening hours, say:
+
+"Opening hours ki information abhi available nahi hai.
+Aap 7011030144 par contact karke confirm kar sakte hain."
+
+
+12. The business location is Dehradun.
+
+13. Do not claim that the business is located in Bangalore or Gurgaon.
+
+14. If asked for the address, provide the complete Dehradun address.
+
+15. If asked for the phone number, provide:
+
+7011030144
+
+
+16. The 50% first-massage offer is active for this demo.
+
+17. Do not provide sexual or explicit services or content.
+
+18. Keep the conversation professional.
+
+19. Do not make medical diagnoses.
+
+20. Do not guarantee medical results.
+
+21. If you don't know something, clearly say that the information
+is not available instead of making something up.
+
+22. If the customer simply says Hi, Hello or Hii,
+respond naturally and ask how you can help.
+
+23. Never say that a booking is confirmed before availability is checked.
+
+
+========================
+CUSTOMER MESSAGE
+========================
+
+${message}
+
+`;
+
+
+    try {
+
+
+      // ==================================================
+      // ADD USER MESSAGE TO HISTORY
+      // ==================================================
+
+      conversationHistory.push({
+
+        role: "user",
+
+        parts: [
+          {
+            text: message
+          }
+        ]
+
+      });
+
+
+      // ==================================================
+// GEMINI BACKEND REQUEST
+// ==================================================
+
+const response = await fetch(BOOKING_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "text/plain;charset=utf-8"
+  },
+  body: JSON.stringify({
+    action: "gemini",
+    message: message,
+    history: conversationHistory.map(item => ({
+      role: item.role,
+      text: item.parts?.[0]?.text || ""
+    }))
+  })
+});
+
+const data = await response.json();
+
+if (!data.success) {
+  throw new Error(
+    data.error || "Gemini API request failed"
+  );
+}
+
+
+      // ==================================================
+      // GET AI RESPONSE
+      // ==================================================
+
+      const rawReply =
+  data.reply ||
+  "Sorry, mujhe response nahi mila.";
+
+
+      // ==================================================
+      // CHECK BOOKING DATA
+      // ==================================================
+
+      const result =
+        extractBooking(rawReply);
+
+
+      let reply =
+        result.cleanReply;
+
+
+      // ==================================================
+      // SHOW AI REPLY
+      // ==================================================
+
+      botMessage.textContent =
+        reply;
+
+
+      // ==================================================
+      // ADD AI RESPONSE TO HISTORY
+      // ==================================================
+
+      conversationHistory.push({
+
+        role: "model",
+
+        parts: [
+          {
+            text: rawReply
+          }
+        ]
+
+      });
+
+
+      // ==================================================
+      // SAVE BOOKING
+      // ==================================================
+
+      if (
+        result.booking &&
+        !bookingSaved
+      ) {
+
+        const saved =
+          await saveBookingToSheet(
+            result.booking
+          );
+
+
+        if (saved) {
+
+          botMessage.textContent =
+            reply +
+            "\n\n✅ Thank you! Aapki booking request receive ho gayi hai. Hum jald hi aapse contact karenge. 😊";
+
+        } else {
+
+  botMessage.textContent =
+    reply;
+
+}
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "AI Error:",
+        error
+      );
+
+
+      botMessage.textContent =
+        "❌ AI se connection nahi ho paya.\n\n" +
+        error.message;
+
+
+      // Failed request ko history se remove karo
+      conversationHistory.pop();
+
+    }
+
+
+    // ==================================================
+    // ENABLE BUTTON
+    // ==================================================
+
+    button.disabled = false;
+
+    button.textContent =
+      "Send";
+
+    chat.scrollTop =
+      chat.scrollHeight;
+
+    input.focus();
 
   }
 
 
-  fetch(
-    BOOKING_URL,
-    {
-      method:"POST",
+  // ==================================================
+  // ENTER KEY
+  // ==================================================
 
-      headers:{
-        "Content-Type":
-          "text/plain;charset=utf-8"
-      },
+  document
+    .getElementById("messageInput")
+    .addEventListener(
+      "keydown",
+      function(event) {
 
-      body:JSON.stringify({
+        if (event.key === "Enter") {
 
-        action:"adminLogin",
+          event.preventDefault();
 
-        password:password
+          sendMessage();
 
-      })
-
-    }
-  )
-  .then(response => response.json())
-
-  .then(data => {
-
-    if(data.success){
-
-      document
-        .getElementById("loginSection")
-        .classList.add("hidden");
-
-      document
-        .getElementById("adminSection")
-        .classList.remove("hidden");
-
-    }else{
-
-      alert("Wrong password.");
-
-    }
-
-  })
-  .catch(error => {
-
-    console.error(error);
-
-    alert("Login connection error.");
-
-  });
-
-}
-
-
-function loadBookings(){
-
-  console.log("Refresh clicked.");
-
-}
-
-
-function exportBookings(){
-
-  console.log("Export clicked.");
-
-}
-
-
-document
-  .getElementById("password")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
-        login();
+        }
 
       }
-
-    }
-  );
+    );
 
 </script>
 
