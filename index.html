@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Dreamzz Spa Admin</title>
+
 
   <style>
 
@@ -12,136 +18,294 @@
       box-sizing: border-box;
     }
 
+
+    html,
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5efe6;
-      color: #3d3028;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
     }
+
+
+    body {
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #f5efe6;
+
+      color: #3d3028;
+
+    }
+
+
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
 
     .container {
+
       width: 100%;
+
       max-width: 900px;
-      margin: auto;
-      padding: 28px 20px;
+
+      margin: 0 auto;
+
+      padding: 45px 20px;
+
+      text-align: center;
+
     }
+
+
+    /* =========================
+       PAGE TITLE
+    ========================= */
 
     .page-title {
-      margin-bottom: 20px;
+
+      margin-bottom: 28px;
+
     }
+
 
     .page-title h1 {
+
       margin: 0;
+
       font-family: Georgia, serif;
-      font-size: 30px;
+
+      font-size: 32px;
+
+      font-weight: 600;
+
       color: #3d3028;
+
     }
+
 
     .page-title p {
-      margin: 5px 0 0;
+
+      margin: 7px 0 0;
+
       color: #8a7564;
+
       font-size: 14px;
+
     }
+
+
+    /* =========================
+       LOGIN CARD
+    ========================= */
 
     .card {
+
+      width: 100%;
+
+      max-width: 620px;
+
+      margin: 0 auto;
+
+      padding: 32px 30px;
+
       background: #fffdf9;
+
       border: 1px solid #eadfd2;
+
       border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 8px 25px rgba(61, 48, 40, 0.08);
+
+      box-shadow:
+        0 10px 30px
+        rgba(61, 48, 40, 0.08);
+
     }
+
 
     .card h2 {
-      margin-top: 0;
-      color: #3d3028;
+
+      margin: 0 0 22px;
+
       font-family: Georgia, serif;
+
+      font-size: 22px;
+
+      font-weight: 600;
+
+      color: #3d3028;
+
     }
+
+
+    /* =========================
+       PASSWORD INPUT
+    ========================= */
 
     input {
+
       width: 100%;
-      padding: 13px;
+
+      height: 46px;
+
+      padding: 0 15px;
+
       border: 1px solid #d9c9b8;
+
       border-radius: 9px;
+
       background: #fffdf9;
+
       color: #3d3028;
+
       font-size: 14px;
+
       outline: none;
+
+      text-align: center;
+
     }
+
+
+    input::placeholder {
+
+      color: #9a8878;
+
+    }
+
 
     input:focus {
+
       border-color: #b58b52;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(181, 139, 82, 0.10);
+
     }
+
+
+    /* =========================
+       LOGIN BUTTON
+    ========================= */
 
     button {
+
+      display: block;
+
+      margin: 14px auto 0;
+
+      padding: 11px 24px;
+
       border: none;
+
       border-radius: 9px;
-      padding: 11px 18px;
+
       background: #5b4636;
+
       color: white;
+
       font-size: 14px;
-      cursor: pointer;
+
       font-weight: 600;
+
+      cursor: pointer;
+
     }
+
 
     button:hover {
+
       background: #49372b;
+
     }
 
-    .login-button {
-      margin-top: 10px;
-    }
 
-    .gold-button {
-      background: #b58b52;
-    }
-
-    .gold-button:hover {
-      background: #9d753f;
-    }
-
-    .login-box {
-      max-width: 620px;
-      margin: 0 auto;
-    }
+    /* =========================
+       ADMIN SECTION
+    ========================= */
 
     .hidden {
+
       display: none;
+
     }
+
+
+    #adminSection {
+
+      margin-top: 20px;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
 
       .container {
-        padding: 20px 12px;
+
+        padding: 35px 14px;
+
       }
+
 
       .page-title h1 {
-        font-size: 26px;
+
+        font-size: 27px;
+
       }
 
+
       .card {
-        padding: 18px;
+
+        padding: 26px 18px;
+
       }
 
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
   <div class="container">
 
+
+    <!-- PAGE TITLE -->
+
     <div class="page-title">
-      <h1>Dreamzz Spa Admin</h1>
-      <p>Booking Management</p>
+
+      <h1>
+        Dreamzz Spa Admin
+      </h1>
+
+      <p>
+        Booking Management
+      </p>
+
     </div>
 
 
     <!-- LOGIN -->
 
-    <div id="loginSection" class="card login-box">
+    <div
+      id="loginSection"
+      class="card"
+    >
 
-      <h2>Admin Login</h2>
+      <h2>
+        Admin Login
+      </h2>
+
 
       <input
         id="password"
@@ -150,8 +314,8 @@
         autocomplete="off"
       >
 
+
       <button
-        class="login-button"
         onclick="login()"
       >
         Login
@@ -167,18 +331,19 @@
       class="card hidden"
     >
 
-      <h2>Bookings</h2>
+      <h2>
+        Welcome to Admin Panel
+      </h2>
 
-      <p>
-        Admin panel is ready.
-      </p>
 
-      <button onclick="loadBookings()">
+      <button
+        onclick="loadBookings()"
+      >
         🔄 Refresh
       </button>
 
+
       <button
-        class="gold-button"
         onclick="exportBookings()"
       >
         ⬇ Export
@@ -186,111 +351,173 @@
 
     </div>
 
+
   </div>
 
 
-<script>
-
-const BOOKING_URL =
-"https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
+  <script>
 
 
-function login(){
+    /* =========================
+       BACKEND URL
+    ========================= */
 
-  const password =
-    document.getElementById("password").value.trim();
-
-  if(!password){
-
-    alert("Please enter admin password.");
-
-    return;
-
-  }
+    const BOOKING_URL =
+      "https://script.google.com/macros/s/AKfycbxsK1yZF70Y9dG-EgyEsKlzu3j1lqrIYfBpfDlygM0wy_NNkPPotvyCMNYAfxIwb9g/exec";
 
 
-  fetch(
-    BOOKING_URL,
-    {
-      method:"POST",
+    /* =========================
+       LOGIN
+    ========================= */
 
-      headers:{
-        "Content-Type":
-          "text/plain;charset=utf-8"
-      },
-
-      body:JSON.stringify({
-
-        action:"adminLogin",
-
-        password:password
-
-      })
-
-    }
-  )
-  .then(response => response.json())
-
-  .then(data => {
-
-    if(data.success){
-
-      document
-        .getElementById("loginSection")
-        .classList.add("hidden");
-
-      document
-        .getElementById("adminSection")
-        .classList.remove("hidden");
-
-    }else{
-
-      alert("Wrong password.");
-
-    }
-
-  })
-  .catch(error => {
-
-    console.error(error);
-
-    alert("Login connection error.");
-
-  });
-
-}
+    async function login() {
 
 
-function loadBookings(){
-
-  console.log("Refresh clicked.");
-
-}
-
-
-function exportBookings(){
-
-  console.log("Export clicked.");
-
-}
+      const password =
+        document
+          .getElementById("password")
+          .value
+          .trim();
 
 
-document
-  .getElementById("password")
-  .addEventListener(
-    "keydown",
-    function(event){
+      if (!password) {
 
-      if(event.key === "Enter"){
+        alert(
+          "Please enter admin password."
+        );
 
-        login();
+        return;
+
+      }
+
+
+      try {
+
+
+        const response =
+          await fetch(
+            BOOKING_URL,
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "text/plain;charset=utf-8"
+              },
+
+              body: JSON.stringify({
+
+                action: "adminLogin",
+
+                password: password
+
+              })
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (data.success) {
+
+
+          document
+            .getElementById(
+              "loginSection"
+            )
+            .classList
+            .add("hidden");
+
+
+          document
+            .getElementById(
+              "adminSection"
+            )
+            .classList
+            .remove("hidden");
+
+
+        } else {
+
+
+          alert(
+            "Wrong password."
+          );
+
+        }
+
+
+      } catch (error) {
+
+
+        console.error(error);
+
+
+        alert(
+          "Login connection error."
+        );
 
       }
 
     }
-  );
 
-</script>
+
+    /* =========================
+       REFRESH
+    ========================= */
+
+    function loadBookings() {
+
+      alert(
+        "Bookings refresh function is ready."
+      );
+
+    }
+
+
+    /* =========================
+       EXPORT
+    ========================= */
+
+    function exportBookings() {
+
+      alert(
+        "Export function is ready."
+      );
+
+    }
+
+
+    /* =========================
+       ENTER KEY LOGIN
+    ========================= */
+
+    document
+      .getElementById("password")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            event.preventDefault();
+
+            login();
+
+          }
+
+        }
+      );
+
+
+  </script>
+
 
 </body>
 </html>
