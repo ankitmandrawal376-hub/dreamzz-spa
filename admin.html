@@ -210,6 +210,44 @@
         🔄 Refresh
       </button>
 
+      <button onclick="exportBookings()" style="margin-top:10px;">
+  📥 Export Bookings
+</button>
+
+<div style="margin-top:15px; display:flex; gap:8px; flex-wrap:wrap;">
+  <input
+    type="text"
+    id="searchBooking"
+    placeholder="Search name or phone..."
+    oninput="filterBookings()"
+    style="padding:10px; border:1px solid #ddd; border-radius:8px; flex:1;"
+  >
+
+  <select
+    id="statusFilter"
+    onchange="filterBookings()"
+    style="padding:10px; border:1px solid #ddd; border-radius:8px;"
+  >
+    <option value="">All Status</option>
+    <option value="New">New</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Completed">Completed</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+
+<option value="Cancelled">Cancelled</option>
+</select>
+
+<input
+  type="date"
+  id="dateFilter"
+  onchange="filterBookings()"
+  style="padding:10px; border:1px solid #ddd; border-radius:8px;"
+>
+
+
+</div>
+
     </div>
 
 
@@ -261,26 +299,32 @@ const BOOKING_URL =
    LOGIN
 ========================= */
 
-function login() {
-
+async function login() {
   const password =
     document.getElementById("password").value;
 
-  if (password === ADMIN_PASSWORD) {
+  try {
+    const response = await fetch(BOOKING_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "adminLogin",
+        password: password
+      })
+    });
 
-    document.getElementById("loginBox").style.display = "none";
+    const result = await response.json();
 
-    document.getElementById("adminPanel").style.display = "block";
+    if (result.success) {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      loadBookings();
+    } else {
+      alert("Wrong password");
+    }
 
-    loadBookings();
-
-  } else {
-
-    document.getElementById("loginError").textContent =
-      "Wrong password.";
-
+  } catch (error) {
+    alert("Login connection error");
   }
-
 }
 
 
@@ -369,6 +413,23 @@ async function loadBookings() {
             <strong>Phone:</strong>
             ${escapeHTML(booking.phone)}
           </div>
+
+          <div style="margin-top:8px;">
+  <a
+    href="tel:+91${escapeHTML(booking.phone)}"
+    style="display:inline-block;padding:7px 12px;background:#111;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
+  >
+    📞 Call
+  </a>
+
+  <a
+    href="https://wa.me/91${escapeHTML(booking.phone)}"
+    target="_blank"
+    style="display:inline-block;margin-left:5px;padding:7px 12px;background:#25D366;color:white;text-decoration:none;border-radius:6px;font-size:13px;"
+  >
+    💬 WhatsApp
+  </a>
+</div>
 
           <div>
             <strong>Service:</strong>
@@ -505,6 +566,41 @@ function escapeHTML(text) {
   return div.innerHTML;
 
 }
+
+function filterBookings() {
+  const search = document
+    .getElementById("searchBooking")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const status = document
+    .getElementById("statusFilter")
+    .value
+    .toLowerCase();
+
+  const filtered = allBookings.filter(booking => {
+    const matchesSearch =
+      !search ||
+      booking.name.toLowerCase().includes(search) ||
+      booking.phone.toLowerCase().includes(search);
+
+    const matchesStatus =
+      !status ||
+      booking.status.toLowerCase() === status;
+
+    const selectedDate = document.getElementById("dateFilter").value;
+
+const matchesDate =
+  !selectedDate ||
+  booking.date === selectedDate;
+
+return matchesSearch && matchesStatus && matchesDate;
+  });
+
+  displayBookings(filtered);
+}
+
 
 </script>
 
